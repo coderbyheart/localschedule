@@ -1,14 +1,8 @@
 {
-	"extends": [
-		"@bifravst/eslint-config-typescript",
-		"plugin:react/recommended"
-	],
-	"settings": {
-		"react": {
-			"version": "latest"
-		}
-	},
-	"rules": {
-		"@typescript-eslint/indent": "warn"
-	}
+  "extends": ["@bifravst/eslint-config-typescript", "plugin:react/recommended"],
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  }
 }
