@@ -9,7 +9,7 @@ const cfg = {
 		app: './src/index.tsx',
 	},
 	resolve: {
-		extensions: ['.ts', '.tsx', '.js'],
+		extensions: ['.ts', '.tsx', '.mjs', '.js'],
 	},
 	module: {
 		rules: [
