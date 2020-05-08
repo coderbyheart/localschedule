@@ -359,7 +359,7 @@ export const TimeZoneSelector = (
 ) => (
 	<select {...props}>
 		{timezones.map((tz) => (
-			<option>{tz}</option>
+			<option key={tz}>{tz}</option>
 		))}
 	</select>
 )
