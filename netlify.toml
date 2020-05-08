@@ -1,0 +1,11 @@
+[build]
+    publish = "dist"
+    command = '''
+    echo $COMMIT_REF > .version;
+    ./node_modules/.bin/tsc;
+    npm run build;
+    cp -v web/* dist;
+    node scripts/renderIndex.js > dist/index.html;
+    '''
+[build.environment]
+  NODE_VERSION = "14"

@@ -1,0 +1,11 @@
+{
+  "extends": "@bifravst/code-style/tsconfig.json",
+  "include": ["src/*.tsx", "src/*.ts"],
+  "compilerOptions": {
+    "outDir": "dist/",
+    "jsx": "react",
+    "lib": ["DOM"],
+    "target": "es2015",
+    "esModuleInterop": true
+  }
+}

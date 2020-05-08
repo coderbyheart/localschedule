@@ -1,0 +1,90 @@
+{
+  "name": "@coderbyheart/localschedule",
+  "version": "0.0.0-development",
+  "description": "Create a sharable schedule with times in your local timezone. Great for remote conferences!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderbyheart/localschedule.git"
+  },
+  "keywords": [
+    "Schedule",
+    "Timezones",
+    "Conferences"
+  ],
+  "author": "Markus Tacker | https://coderbyheart.com/",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coderbyheart/localschedule/issues"
+  },
+  "homepage": "https://github.com/coderbyheart/localschedule#readme",
+  "scripts": {
+    "build": "npx webpack --config-name production",
+    "start": "webpack-dev-server --config-name development --open",
+    "lint": "eslint --ext .js,.ts,.tsx src/**",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect",
+    "postinstall": "check-node-version --package"
+  },
+  "devDependencies": {
+    "@bifravst/code-style": "^7.1.10",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-angular": "^8.3.4",
+    "@svgr/webpack": "^5.4.0",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "@types/styled-components": "^5.1.0",
+    "check-node-version": "^4.0.3",
+    "eslint-plugin-react": "^7.19.0",
+    "fetch-ponyfill": "^6.1.0",
+    "handlebars": "^4.7.6",
+    "husky": "^4.2.5",
+    "localforage": "^1.7.3",
+    "semantic-release": "^17.0.7",
+    "snyk": "^1.319.0",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^7.0.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --ext .js,.ts"
+    ],
+    "*.{md,json,yaml,yml,js}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "date-fns": "^2.13.0",
+    "date-fns-tz": "^1.0.10",
+    "feather-icons": "^4.28.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.0"
+  },
+  "release": {
+    "branches": [
+      "saga"
+    ],
+    "remoteTags": true,
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github"
+    ]
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "snyk": true
+}
