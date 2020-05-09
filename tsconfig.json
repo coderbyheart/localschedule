@@ -4,7 +4,7 @@
   "compilerOptions": {
     "outDir": "dist/",
     "esModuleInterop": true,
-    "module": "es6",
+    "module": "AMD",
     "target": "es5",
     "lib": ["es6", "dom"],
     "jsx": "react",
