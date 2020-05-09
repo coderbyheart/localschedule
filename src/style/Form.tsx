@@ -15,22 +15,25 @@ export const DeleteButton = styled(Button)`
 
 export const AddButton = styled(Button)`
 	color: #0fa;
+	&:disabled {
+		color: #aaa;
+	}
 `
 
 export const Input = styled.input`
 	background-color: transparent;
 	border: 1px solid #fff;
-	padding: 0.5rem;
+	padding: 0.25rem 0.5rem;
 	height: 30px;
 	color: #fff;
 `
 
 export const DateInput = styled(Input)`
 	margin: 0;
+	${Input} + & {
+		margin-left: 0.5rem;
+	}
 `
 export const NumberInput = styled(Input)`
 	width: 50px;
-	& + & {
-		margin-left: 0.5rem;
-	}
 `

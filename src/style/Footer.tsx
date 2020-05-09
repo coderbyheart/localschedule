@@ -1,12 +1,12 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { mobileBreakpoint, wideBreakpoint } from './settings'
+import { wideBreakpoint } from './settings'
 
 import GithubIcon from 'feather-icons/dist/icons/github.svg'
 
 const StyledFooter = styled.footer`
 	padding: 1rem 2rem;
-	@media (min-width: ${mobileBreakpoint}) {
+	@media (min-width: ${wideBreakpoint}) {
 		padding: 4rem;
 	}
 
@@ -27,7 +27,10 @@ const Copyright = styled(Section)`
 	font-size: 80%;
 	opacity: 0.8;
 	text-align: center;
-	margin-top: 4rem;
+	margin-top: 2rem;
+	@media (min-width: ${wideBreakpoint}) {
+		margin-top: 4rem;
+	}
 `
 
 const Nav = styled.nav`

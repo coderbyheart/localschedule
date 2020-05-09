@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Table } from './style/Table'
 import {
 	Button,
@@ -51,6 +51,12 @@ const Countdown = ({
 
 const userTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
 
+type AddSession = {
+	name: string
+	hour: number
+	minute: number
+}
+
 export const Schedule = ({
 	conferenceName,
 	conferenceDate,
@@ -67,7 +73,24 @@ export const Schedule = ({
 	const [updatedDay, updateDay] = useState(conferenceDate)
 	const [updatedTimeZone, updateTimeZone] = useState(eventTimezoneName)
 	const [updatedSessions, updateSessions] = useState(sessions)
-	const [add, updateAdd] = useState({ name: '', hour: 0, minute: 0 })
+	const [add, updateAdd] = useState<AddSession>({
+		name: '',
+		hour: 0,
+		minute: 0,
+	})
+	const inputRef = useRef<HTMLInputElement>(null)
+	const isInputValid = () =>
+		add.name.length > 0 &&
+		add.hour >= 0 &&
+		add.hour <= 23 &&
+		add.minute >= 0 &&
+		add.minute <= 59
+
+	const addSession = (add: AddSession) =>
+		updateSessions((sessions) => ({
+			...sessions,
+			[parseInt(`${add.hour}${add.minute}`, 10)]: add.name,
+		}))
 
 	const toUserTime = (time: number) => {
 		const minutes = time % 100
@@ -100,7 +123,7 @@ export const Schedule = ({
 		<Table>
 			<thead>
 				<tr>
-					<th colSpan={4}>
+					<th colSpan={editing ? 3 : 4}>
 						{!editing && `${updatedName}: ${updatedDay}`}
 						{editing && (
 							<>
@@ -141,7 +164,7 @@ export const Schedule = ({
 					</th>
 				</tr>
 				<tr>
-					<th>
+					<th colSpan={editing ? 2 : 1}>
 						Conf Time
 						<br />
 						{editing && (
@@ -152,31 +175,96 @@ export const Schedule = ({
 						)}
 						{!editing && <small>{updatedTimeZone}</small>}
 					</th>
-					<th>
-						Your Time
-						<br />
-						<small>{userTimeZone}</small>
-					</th>
-					<th>Starts in</th>
+					{!editing && (
+						<>
+							<th>
+								Your Time
+								<br />
+								<small>{userTimeZone}</small>
+							</th>
+							<th>Starts in</th>
+						</>
+					)}
 					<th>Session</th>
 				</tr>
 			</thead>
 			<tbody>
+				{editing && (
+					<tr>
+						<td>
+							<AddButton
+								disabled={!isInputValid()}
+								onClick={() => {
+									addSession(add)
+								}}
+							>
+								<AddIcon />
+							</AddButton>
+						</td>
+						<td className="time">
+							<NumberInput
+								ref={inputRef}
+								type="number"
+								min={0}
+								max={23}
+								value={add.hour}
+								onChange={({ target: { value } }) => {
+									try {
+										const hour = parseInt(value, 10)
+										updateAdd({
+											...add,
+											hour,
+										})
+									} catch {}
+								}}
+							/>
+							{':'}
+							<NumberInput
+								type="number"
+								min={0}
+								max={59}
+								value={add.minute}
+								onChange={({ target: { value } }) => {
+									try {
+										const minute = parseInt(value, 10)
+										updateAdd({
+											...add,
+											minute,
+										})
+									} catch {}
+								}}
+							/>
+						</td>
+						<td>
+							<Input
+								type="text"
+								value={add.name}
+								onKeyUp={({ key }) => {
+									if (key === 'Enter') {
+										if (isInputValid()) {
+											addSession(add)
+											updateAdd({
+												...add,
+												name: '',
+											})
+											inputRef.current?.focus()
+										}
+									}
+								}}
+								onChange={({ target: { value } }) =>
+									updateAdd({
+										...add,
+										name: value,
+									})
+								}
+							/>
+						</td>
+					</tr>
+				)}
 				{Object.entries(updatedSessions).map(([time, name]) => (
 					<tr key={time}>
-						<td className={'time'}>
-							{formatEventTime(toEventTime((time as unknown) as number))}
-						</td>
-						<td className={'time'}>
-							{formatUserTime(toUserTime((time as unknown) as number))}
-						</td>
-						<Countdown
-							key={updatedDay}
-							startTime={toUserTime((time as unknown) as number)}
-						/>
-						<td>
-							{name}
-							{editing && (
+						{editing && (
+							<td>
 								<DeleteButton>
 									<DeleteIcon
 										onClick={() => {
@@ -188,63 +276,25 @@ export const Schedule = ({
 										}}
 									/>
 								</DeleteButton>
-							)}
+							</td>
+						)}
+						<td className={'time'}>
+							{formatEventTime(toEventTime((time as unknown) as number))}
 						</td>
+						{!editing && (
+							<>
+								<td className={'time'}>
+									{formatUserTime(toUserTime((time as unknown) as number))}
+								</td>
+								<Countdown
+									key={updatedDay}
+									startTime={toUserTime((time as unknown) as number)}
+								/>
+							</>
+						)}
+						<td>{name}</td>
 					</tr>
 				))}
-				{editing && (
-					<tr>
-						<td className="time">
-							<NumberInput
-								type="number"
-								min={0}
-								max={23}
-								value={add.hour}
-								onChange={({ target: { value } }) =>
-									updateAdd({
-										...add,
-										hour: parseInt(value, 10),
-									})
-								}
-							/>
-							<NumberInput
-								type="number"
-								min={0}
-								max={59}
-								value={add.minute}
-								onChange={({ target: { value } }) =>
-									updateAdd({
-										...add,
-										minute: parseInt(value, 10),
-									})
-								}
-							/>
-						</td>
-						<td colSpan={2}></td>
-						<td>
-							<Input
-								type="text"
-								value={add.name}
-								onChange={({ target: { value } }) =>
-									updateAdd({
-										...add,
-										name: value,
-									})
-								}
-							/>
-							<AddButton>
-								<AddIcon
-									onClick={() => {
-										updateSessions((sessions) => ({
-											...sessions,
-											[parseInt(`${add.hour}${add.minute}`, 10)]: add.name,
-										}))
-									}}
-								/>
-							</AddButton>
-						</td>
-					</tr>
-				)}
 			</tbody>
 		</Table>
 	)
