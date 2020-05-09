@@ -13,7 +13,7 @@ export type Theme = {
 }
 
 declare module 'styled-components' {
-	export interface DefaultTheme extends Theme {}
+	export interface DefaultTheme extends Theme {} // eslint-disable-line @typescript-eslint/consistent-type-definitions,@typescript-eslint/no-empty-interface
 }
 
 export const dark: Theme = {
