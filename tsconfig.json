@@ -4,10 +4,11 @@
   "compilerOptions": {
     "outDir": "dist/",
     "esModuleInterop": true,
-    "module": "AMD",
+    "module": "es6",
     "target": "es5",
     "lib": ["es6", "dom"],
     "jsx": "react",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowJs": true
   }
 }

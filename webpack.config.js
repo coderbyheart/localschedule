@@ -1,12 +1,15 @@
 const webpack = require('webpack')
 const { html, getVersion } = require('./scripts/html')
 const gitHubUrl = require('./package.json').homepage
+const path = require('path')
 
 const VERSION = getVersion()
 
 const cfg = {
-	entry: {
-		app: './src/index.tsx',
+	entry: './src/index.tsx',
+	output: {
+		filename: 'app.js',
+		path: path.resolve(__dirname, 'dist'),
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.mjs', '.js'],
