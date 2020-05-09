@@ -4,6 +4,7 @@ import { Footer } from './style/Footer'
 import { Main, Info } from './style/Main'
 import { GlobalStyle } from './style/Global'
 import { Schedule } from './Schedule'
+import { format } from 'date-fns'
 
 import LockIcon from 'feather-icons/dist/icons/lock.svg'
 import UnLockIcon from 'feather-icons/dist/icons/unlock.svg'
@@ -11,7 +12,7 @@ import UnLockIcon from 'feather-icons/dist/icons/unlock.svg'
 export const App = () => {
 	let cfg = {
 		name: 'ExampleConf',
-		day: '2020-11-21',
+		day: format(new Date(), 'yyyy-MM-dd'),
 		tz: 'Europe/Oslo',
 		sessions: {
 			900: 'Arrival & Breakfast',
