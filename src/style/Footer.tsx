@@ -6,13 +6,14 @@ import GithubIcon from 'feather-icons/dist/icons/github.svg'
 
 const StyledFooter = styled.footer`
 	padding: 1rem 2rem;
+	opacity: 0.75;
 	@media (min-width: ${wideBreakpoint}) {
 		padding: 4rem;
 	}
 
-	color: #ffffffcc;
+	color: ${(props) => props.theme.colors.text};
 	a {
-		color: #ffffffcc;
+		color: ${(props) => props.theme.colors.text};
 	}
 	p {
 		line-height: 1.5rem;

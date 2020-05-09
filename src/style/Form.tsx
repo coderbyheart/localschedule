@@ -2,30 +2,34 @@ import styled from 'styled-components'
 
 export const Button = styled.button`
 	background-color: transparent;
-	color: #fff;
+	color: ${(props) => props.theme.colors.text};
 	opacity: 0.75;
 	padding: 0;
 	border: 0;
-	float: right;
+	display: flex;
+	align-items: center;
+	svg {
+		margin-right: 0.5rem;
+	}
 `
 
 export const DeleteButton = styled(Button)`
-	color: #ff5235;
+	color: ${(props) => props.theme.colors.delete};
 `
 
 export const AddButton = styled(Button)`
-	color: #0fa;
+	color: ${(props) => props.theme.colors.add};
 	&:disabled {
-		color: #aaa;
+		color: ${(props) => props.theme.colors.addDisabled};
 	}
 `
 
 export const Input = styled.input`
 	background-color: transparent;
-	border: 1px solid #fff;
+	border: 1px solid ${(props) => props.theme.colors.text};
 	padding: 0.25rem 0.5rem;
 	height: 30px;
-	color: #fff;
+	color: ${(props) => props.theme.colors.text};
 `
 
 export const DateInput = styled(Input)`

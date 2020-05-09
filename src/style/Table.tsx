@@ -1,13 +1,17 @@
 import styled from 'styled-components'
 import { wideBreakpoint } from './settings'
+import { Button } from './Form'
 
 export const Table = styled.table`
 	border-collapse: collapse;
 	width: 100%;
 	height: 100%;
+	${Button} {
+		float: right;
+	}
 	td,
 	th {
-		border: 1px solid #7d7d7d;
+		border: 1px solid ${(props) => props.theme.colors.borderColor};
 		padding: 0.25rem;
 		@media (min-width: ${wideBreakpoint}) {
 			padding: 1rem;
@@ -48,7 +52,7 @@ export const Table = styled.table`
 		white-space: nowrap;
 	}
 	td.hot {
-		background-color: #ff5e007a;
+		background-color: ${(props) => props.theme.colors.countdownWarning};
 	}
 	th {
 		small {
