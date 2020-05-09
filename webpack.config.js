@@ -8,7 +8,7 @@ const VERSION = getVersion()
 const cfg = {
 	entry: './src/index.tsx',
 	output: {
-		filename: 'app.js',
+		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
 	},
 	resolve: {

@@ -72,7 +72,7 @@
               )
             : reactDevLibraries
         )
-          .then(() => loadJsAsync(["{{SITE_DIR}}/app.js?{{VERSION}}"]))
+          .then(() => loadJsAsync(["{{SITE_DIR}}/bundle.js?{{VERSION}}"]))
           .then(() => {
             boot({
               target: document.querySelector("#root"),
