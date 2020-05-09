@@ -215,7 +215,9 @@ export const Schedule = ({
 											...add,
 											hour,
 										})
-									} catch {}
+									} catch {
+										// pass
+									}
 								}}
 							/>
 							{':'}
@@ -231,7 +233,9 @@ export const Schedule = ({
 											...add,
 											minute,
 										})
-									} catch {}
+									} catch {
+										// pass
+									}
 								}}
 							/>
 						</td>
