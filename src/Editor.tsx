@@ -41,6 +41,15 @@ export const Editor = ({
 	const userTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
 	const eventTime = toEventTime({ conferenceDate, userTimeZone })
 
+	const addAction = (add: AddSession) => {
+		onAdd(add)
+		updateAdd({
+			...add,
+			name: '',
+		})
+		inputRef.current?.focus()
+	}
+
 	return (
 		<>
 			<Table>
@@ -57,7 +66,7 @@ export const Editor = ({
 							<AddButton
 								disabled={!isInputValid()}
 								onClick={() => {
-									onAdd(add)
+									addAction(add)
 								}}
 							>
 								<AddIcon />
@@ -108,12 +117,8 @@ export const Editor = ({
 								onKeyUp={({ key }) => {
 									if (key === 'Enter') {
 										if (isInputValid()) {
+											addAction(add)
 											onAdd(add)
-											updateAdd({
-												...add,
-												name: '',
-											})
-											inputRef.current?.focus()
 										}
 									}
 								}}
