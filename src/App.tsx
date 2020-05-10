@@ -61,7 +61,7 @@ export const App = () => {
 					<>
 						<Title>
 							<Button
-								title="Edit schedule"
+								title="Save changes"
 								onClick={() => {
 									const cfg = {
 										name: updatedName,
@@ -78,7 +78,7 @@ export const App = () => {
 									setEditing(false)
 								}}
 							>
-								<LockIcon />
+								<UnLockIcon />
 							</Button>
 							<DateEditor>
 								<Input
