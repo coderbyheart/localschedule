@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { wideBreakpoint } from './settings'
+import { wideBreakpoint, mobileBreakpoint } from './settings'
 
 export const Button = styled.button`
 	background-color: transparent;
@@ -38,6 +38,9 @@ export const DateInput = styled(Input)`
 `
 export const NumberInput = styled(Input)`
 	width: 30px;
+	@media (min-width: ${mobileBreakpoint}) {
+		width: 60px;
+	}
 `
 
 export const DateEditor = styled.div`
