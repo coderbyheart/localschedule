@@ -39,6 +39,8 @@ const Countdown = ({
 	)
 }
 
+const formatTimezone = (tz: string) => tz.split('/')[1].replace('_', ' ')
+
 export const Schedule = ({
 	conferenceDate,
 	eventTimezoneName,
@@ -52,6 +54,7 @@ export const Schedule = ({
 	const eventTime = toEventTime({ conferenceDate, userTimeZone })
 	const userTime = toUserTime({ conferenceDate, eventTimezoneName })
 	const userFormat = formatUserTime({ userTimeZone })
+
 	return (
 		<Table>
 			<thead>
@@ -59,12 +62,12 @@ export const Schedule = ({
 					<th>
 						Conf Time
 						<br />
-						<small>{eventTimezoneName}</small>
+						<small>{formatTimezone(eventTimezoneName)}</small>
 					</th>
 					<th>
 						Your Time
 						<br />
-						<small>{userTimeZone}</small>
+						<small>{formatTimezone(userTimeZone)}</small>
 					</th>
 					<th>Starts in</th>
 					<th>Session</th>

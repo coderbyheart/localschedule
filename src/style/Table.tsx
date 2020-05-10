@@ -33,14 +33,6 @@ export const Table = styled.table`
 			font-size: 14px;
 		}
 	}
-	thead {
-		tr:first-child {
-			th {
-				font-size: 16px;
-				padding: 1rem;
-			}
-		}
-	}
 	td.time {
 		text-align: right;
 		width: 10%;
