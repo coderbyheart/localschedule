@@ -1,7 +1,7 @@
 {
   "name": "@coderbyheart/localschedule",
   "version": "0.0.0-development",
-  "description": "Create a sharable schedule with times in your local timezone. Great for remote conferences!",
+  "description": "Create a shareable schedule with times in your local timezone. Great for remote conferences!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/coderbyheart/localschedule.git"
