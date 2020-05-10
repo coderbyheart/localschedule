@@ -1,21 +1,11 @@
 import * as React from 'react'
-import { useState, useRef } from 'react'
 import { Table } from './style/Table'
 import {
-	Button,
-	Input,
-	DateInput,
-	NumberInput,
-	DeleteButton,
-	AddButton,
-} from './style/Form'
-import { zonedTimeToUtc, format } from 'date-fns-tz'
-import { TimeZoneSelector } from './timezones'
-
-import LockIcon from 'feather-icons/dist/icons/lock.svg'
-import UnlockIcon from 'feather-icons/dist/icons/unlock.svg'
-import AddIcon from 'feather-icons/dist/icons/plus-circle.svg'
-import DeleteIcon from 'feather-icons/dist/icons/x-circle.svg'
+	formatEventTime,
+	toEventTime,
+	formatUserTime,
+	toUserTime,
+} from './time'
 
 const startsInMinutes = (startTime: Date) => {
 	return Math.floor((startTime.getTime() - Date.now()) / 1000 / 60)
@@ -49,253 +39,50 @@ const Countdown = ({
 	)
 }
 
-const userTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
-
-type AddSession = {
-	name: string
-	hour: number
-	minute: number
-}
-
 export const Schedule = ({
-	conferenceName,
 	conferenceDate,
 	eventTimezoneName,
 	sessions,
 }: {
-	conferenceName: string
 	conferenceDate: string
 	eventTimezoneName: string
 	sessions: { [key: number]: string }
 }) => {
-	const [editing, setEditing] = useState(false)
-	const [updatedName, updateName] = useState(conferenceName)
-	const [updatedDay, updateDay] = useState(conferenceDate)
-	const [updatedTimeZone, updateTimeZone] = useState(eventTimezoneName)
-	const [updatedSessions, updateSessions] = useState(sessions)
-	const [add, updateAdd] = useState<AddSession>({
-		name: '',
-		hour: 0,
-		minute: 0,
-	})
-	const inputRef = useRef<HTMLInputElement>(null)
-	const isInputValid = () =>
-		add.name.length > 0 &&
-		add.hour >= 0 &&
-		add.hour <= 23 &&
-		add.minute >= 0 &&
-		add.minute <= 59
-
-	const addSession = (add: AddSession) =>
-		updateSessions((sessions) => ({
-			...sessions,
-			[parseInt(`${add.hour}${add.minute}`, 10)]: add.name,
-		}))
-
-	const toUserTime = (time: number) => {
-		const minutes = time % 100
-		const hours = (time - minutes) / 100
-		return zonedTimeToUtc(
-			`${updatedDay} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
-				2,
-				'0',
-			)}:00.000`,
-
-			updatedTimeZone,
-		)
-	}
-	const formatUserTime = (date: Date) =>
-		format(date, 'HH:mm', { timeZone: userTimeZone })
-
-	const toEventTime = (time: number) => {
-		const minutes = time % 100
-		const hours = (time - minutes) / 100
-		return zonedTimeToUtc(
-			`${updatedDay} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
-				2,
-				'0',
-			)}:00.000`,
-			userTimeZone,
-		)
-	}
-	const formatEventTime = (date: Date) => format(date, 'HH:mm')
+	const userTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
+	const eventTime = toEventTime({ conferenceDate, userTimeZone })
+	const userTime = toUserTime({ conferenceDate, eventTimezoneName })
+	const userFormat = formatUserTime({ userTimeZone })
 	return (
 		<Table>
 			<thead>
 				<tr>
-					<th colSpan={editing ? 3 : 4}>
-						{!editing && `${updatedName}: ${updatedDay}`}
-						{editing && (
-							<>
-								<Input
-									type="text"
-									value={updatedName}
-									onChange={({ target: { value } }) => updateName(value)}
-								/>
-								<DateInput
-									type="date"
-									value={updatedDay}
-									onChange={({ target: { value } }) => updateDay(value)}
-								/>
-							</>
-						)}
-						<Button
-							title="Edit schedule"
-							onClick={() => {
-								if (editing) {
-									const cfg = {
-										name: updatedName,
-										day: updatedDay,
-										tz: updatedTimeZone,
-										sessions: updatedSessions,
-									}
-									window.location.assign(
-										`${document.location.href.replace(
-											/#.+/,
-											'',
-										)}#${encodeURIComponent(btoa(JSON.stringify(cfg)))}`,
-									)
-								}
-								setEditing((editing) => !editing)
-							}}
-						>
-							{editing ? <UnlockIcon /> : <LockIcon />}
-						</Button>
-					</th>
-				</tr>
-				<tr>
-					<th colSpan={editing ? 2 : 1}>
+					<th>
 						Conf Time
 						<br />
-						{editing && (
-							<TimeZoneSelector
-								value={updatedTimeZone}
-								onChange={({ target: { value } }) => updateTimeZone(value)}
-							/>
-						)}
-						{!editing && <small>{updatedTimeZone}</small>}
+						<small>{eventTimezoneName}</small>
 					</th>
-					{!editing && (
-						<>
-							<th>
-								Your Time
-								<br />
-								<small>{userTimeZone}</small>
-							</th>
-							<th>Starts in</th>
-						</>
-					)}
+					<th>
+						Your Time
+						<br />
+						<small>{userTimeZone}</small>
+					</th>
+					<th>Starts in</th>
 					<th>Session</th>
 				</tr>
 			</thead>
 			<tbody>
-				{editing && (
-					<tr>
-						<td>
-							<AddButton
-								disabled={!isInputValid()}
-								onClick={() => {
-									addSession(add)
-								}}
-							>
-								<AddIcon />
-							</AddButton>
-						</td>
-						<td className="time">
-							<NumberInput
-								ref={inputRef}
-								type="number"
-								min={0}
-								max={23}
-								value={add.hour}
-								onChange={({ target: { value } }) => {
-									try {
-										const hour = parseInt(value, 10)
-										updateAdd({
-											...add,
-											hour,
-										})
-									} catch {
-										// pass
-									}
-								}}
-							/>
-							{':'}
-							<NumberInput
-								type="number"
-								min={0}
-								max={59}
-								value={add.minute}
-								onChange={({ target: { value } }) => {
-									try {
-										const minute = parseInt(value, 10)
-										updateAdd({
-											...add,
-											minute,
-										})
-									} catch {
-										// pass
-									}
-								}}
-							/>
-						</td>
-						<td>
-							<Input
-								type="text"
-								value={add.name}
-								onKeyUp={({ key }) => {
-									if (key === 'Enter') {
-										if (isInputValid()) {
-											addSession(add)
-											updateAdd({
-												...add,
-												name: '',
-											})
-											inputRef.current?.focus()
-										}
-									}
-								}}
-								onChange={({ target: { value } }) =>
-									updateAdd({
-										...add,
-										name: value,
-									})
-								}
-							/>
-						</td>
-					</tr>
-				)}
-				{Object.entries(updatedSessions).map(([time, name]) => (
+				{Object.entries(sessions).map(([time, name]) => (
 					<tr key={time}>
-						{editing && (
-							<td>
-								<DeleteButton>
-									<DeleteIcon
-										onClick={() => {
-											updateSessions((sessions) => {
-												const s = { ...sessions }
-												delete s[(time as unknown) as number]
-												return s
-											})
-										}}
-									/>
-								</DeleteButton>
-							</td>
-						)}
 						<td className={'time'}>
-							{formatEventTime(toEventTime((time as unknown) as number))}
+							{formatEventTime(eventTime((time as unknown) as number))}
 						</td>
-						{!editing && (
-							<>
-								<td className={'time'}>
-									{formatUserTime(toUserTime((time as unknown) as number))}
-								</td>
-								<Countdown
-									key={updatedDay}
-									startTime={toUserTime((time as unknown) as number)}
-								/>
-							</>
-						)}
+						<td className={'time'}>
+							{userFormat(userTime((time as unknown) as number))}
+						</td>
+						<Countdown
+							key={conferenceDate}
+							startTime={userTime((time as unknown) as number)}
+						/>
 						<td>{name}</td>
 					</tr>
 				))}

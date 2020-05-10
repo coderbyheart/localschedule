@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { wideBreakpoint } from './settings'
 
 export const Button = styled.button`
 	background-color: transparent;
@@ -34,10 +35,26 @@ export const Input = styled.input`
 
 export const DateInput = styled(Input)`
 	margin: 0;
-	${Input} + & {
-		margin-left: 0.5rem;
-	}
 `
 export const NumberInput = styled(Input)`
-	width: 50px;
+	width: 30px;
+`
+
+export const DateEditor = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	select {
+		height: 30px;
+	}
+	${Input} + ${Input}, ${Input} + select {
+			margin-top: 0.5rem;
+		}
+	@media (min-width: ${wideBreakpoint}) {
+		flex-direction: row;
+		${Input} + ${Input}, ${Input} + select {
+			margin-left: 0.5rem;
+			margin-top: 0;
+		}
+	}
 `

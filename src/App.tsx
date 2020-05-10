@@ -1,23 +1,21 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { Footer } from './style/Footer'
-import { Main, Info } from './style/Main'
+import { Main, Info, Headline, Title } from './style/Main'
 import { Theme, dark, light } from './style/theme'
 import { GlobalStyle } from './style/Global'
 import { Schedule } from './Schedule'
 import { format } from 'date-fns'
 import { ThemeProvider } from 'styled-components'
+import { Button, Input, DateInput, DateEditor } from './style/Form'
+import { Editor } from './Editor'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 import LockIcon from 'feather-icons/dist/icons/lock.svg'
 import UnLockIcon from 'feather-icons/dist/icons/unlock.svg'
-import LightModeIcon from 'feather-icons/dist/icons/sun.svg'
-import DarkModeIcon from 'feather-icons/dist/icons/moon.svg'
-import { Button } from './style/Form'
+import { TimeZoneSelector } from './timezones'
 
 export const App = () => {
-	const [theme, updateTheme] = useState<Theme>(
-		window.localStorage.getItem('theme') === 'light' ? light : dark,
-	)
 	let cfg = {
 		name: 'ExampleConf',
 		day: format(new Date(), 'yyyy-MM-dd'),
@@ -47,43 +45,117 @@ export const App = () => {
 		}
 		console.log(cfg)
 	}
+	const [theme, updateTheme] = useState<Theme>(
+		window.localStorage.getItem('theme') === 'light' ? light : dark,
+	)
+	const [updatedName, updateName] = useState(cfg.name)
+	const [updatedDay, updateDay] = useState(cfg.day)
+	const [updatedTimeZone, updateTimeZone] = useState(cfg.tz)
+	const [updatedSessions, updateSessions] = useState(cfg.sessions)
+	const [editing, setEditing] = useState(false)
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />
 			<Main>
-				<Schedule
-					sessions={cfg.sessions}
-					eventTimezoneName={cfg.tz}
-					conferenceName={cfg.name}
-					conferenceDate={cfg.day}
-				/>
+				{editing && (
+					<>
+						<Title>
+							<Button
+								title="Edit schedule"
+								onClick={() => {
+									const cfg = {
+										name: updatedName,
+										day: updatedDay,
+										tz: updatedTimeZone,
+										sessions: updatedSessions,
+									}
+									window.location.assign(
+										`${document.location.href.replace(
+											/#.+/,
+											'',
+										)}#${encodeURIComponent(btoa(JSON.stringify(cfg)))}`,
+									)
+									setEditing(false)
+								}}
+							>
+								<LockIcon />
+							</Button>
+							<DateEditor>
+								<Input
+									type="text"
+									value={updatedName}
+									onChange={({ target: { value } }) => updateName(value)}
+								/>
+								<DateInput
+									type="date"
+									value={updatedDay}
+									onChange={({ target: { value } }) => updateDay(value)}
+								/>
+								<TimeZoneSelector
+									value={updatedTimeZone}
+									onChange={({ target: { value } }) => updateTimeZone(value)}
+								/>
+							</DateEditor>
+							<ThemeSwitcher
+								currentTheme={theme}
+								darkTheme={dark}
+								lightTheme={light}
+								onSwitch={updateTheme}
+							/>
+						</Title>
+						<Editor
+							onAdd={(add) => {
+								updateSessions((sessions) => ({
+									...sessions,
+									[parseInt(`${add.hour}${add.minute}`, 10)]: add.name,
+								}))
+							}}
+							onDelete={(time) => {
+								updateSessions((sessions) => {
+									const s = { ...sessions }
+									delete (s as { [key: number]: string })[time]
+									return s
+								})
+							}}
+							conferenceDate={updatedDay}
+							eventTimezoneName={updatedTimeZone}
+							sessions={updatedSessions}
+						/>
+					</>
+				)}
+				{!editing && (
+					<>
+						<Title>
+							<Button
+								title="Edit schedule"
+								onClick={() => {
+									setEditing(true)
+								}}
+							>
+								<LockIcon />
+							</Button>
+							<Headline>
+								{updatedName}: {updatedDay}
+							</Headline>
+							<ThemeSwitcher
+								currentTheme={theme}
+								darkTheme={dark}
+								lightTheme={light}
+								onSwitch={updateTheme}
+							/>
+						</Title>
+						<Schedule
+							sessions={cfg.sessions}
+							eventTimezoneName={cfg.tz}
+							conferenceDate={cfg.day}
+						/>
+					</>
+				)}
 				<Info>
 					<p>
 						Click the <LockIcon /> icon to create your own schedule. When done,
 						click the <UnLockIcon /> and share the updated URL.
 					</p>
-				</Info>
-				<Info>
-					{theme === dark && (
-						<Button
-							onClick={() => {
-								updateTheme(light)
-								window.localStorage.setItem('theme', 'light')
-							}}
-						>
-							<LightModeIcon /> switch to light mode
-						</Button>
-					)}
-					{theme === light && (
-						<Button
-							onClick={() => {
-								updateTheme(dark)
-								window.localStorage.setItem('theme', 'dark')
-							}}
-						>
-							<DarkModeIcon /> switch to dark mode
-						</Button>
-					)}
 				</Info>
 			</Main>
 			<Footer />

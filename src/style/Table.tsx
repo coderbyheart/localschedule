@@ -1,14 +1,10 @@
 import styled from 'styled-components'
 import { wideBreakpoint } from './settings'
-import { Button } from './Form'
 
 export const Table = styled.table`
 	border-collapse: collapse;
 	width: 100%;
 	height: 100%;
-	${Button} {
-		float: right;
-	}
 	td,
 	th {
 		border: 1px solid ${(props) => props.theme.colors.borderColor};
@@ -41,7 +37,6 @@ export const Table = styled.table`
 		tr:first-child {
 			th {
 				font-size: 16px;
-				border-top: 0;
 				padding: 1rem;
 			}
 		}
