@@ -9,8 +9,16 @@ import { formatEventTime, toEventTime } from './time'
 
 type AddSession = {
 	name: string
-	hour: number
-	minute: number
+	hour: string
+	minute: string
+}
+
+const toNumber = (n: string) => {
+	try {
+		return parseInt(n, 10)
+	} catch {
+		return null
+	}
 }
 
 export const Editor = ({
@@ -27,16 +35,23 @@ export const Editor = ({
 }) => {
 	const [add, updateAdd] = useState<AddSession>({
 		name: '',
-		hour: 0,
-		minute: 0,
+		hour: '19',
+		minute: '45',
 	})
 	const inputRef = useRef<HTMLInputElement>(null)
-	const isInputValid = () =>
-		add.name.length > 0 &&
-		add.hour >= 0 &&
-		add.hour <= 23 &&
-		add.minute >= 0 &&
-		add.minute <= 59
+	const isInputValid = () => {
+		const hour = toNumber(add.hour)
+		const minute = toNumber(add.minute)
+		return (
+			add.name.length > 0 &&
+			hour !== null &&
+			hour >= 0 &&
+			hour <= 23 &&
+			minute !== null &&
+			minute >= 0 &&
+			minute <= 59
+		)
+	}
 
 	const userTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
 	const eventTime = toEventTime({ conferenceDate, userTimeZone })
@@ -75,38 +90,26 @@ export const Editor = ({
 						<td className="time">
 							<NumberInput
 								ref={inputRef}
-								type="number"
-								min={0}
-								max={23}
+								type="text"
+								inputMode="numeric"
 								value={add.hour}
 								onChange={({ target: { value } }) => {
-									try {
-										const hour = parseInt(value, 10)
-										updateAdd({
-											...add,
-											hour,
-										})
-									} catch {
-										// pass
-									}
+									updateAdd({
+										...add,
+										hour: value,
+									})
 								}}
 							/>
 							{':'}
 							<NumberInput
-								type="number"
-								min={0}
-								max={59}
+								type="text"
+								inputMode="numeric"
 								value={add.minute}
 								onChange={({ target: { value } }) => {
-									try {
-										const minute = parseInt(value, 10)
-										updateAdd({
-											...add,
-											minute,
-										})
-									} catch {
-										// pass
-									}
+									updateAdd({
+										...add,
+										minute: value,
+									})
 								}}
 							/>
 						</td>
