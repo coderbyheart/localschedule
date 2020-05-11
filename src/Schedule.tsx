@@ -6,6 +6,9 @@ import {
 	formatUserTime,
 	toUserTime,
 } from './time'
+import { formatDistance } from 'date-fns'
+
+const diff = (startTime: Date) => formatDistance(startTime, new Date())
 
 const startsInMinutes = (startTime: Date) => {
 	return Math.floor((startTime.getTime() - Date.now()) / 1000 / 60)
@@ -18,12 +21,16 @@ const Countdown = ({
 	startTime: Date
 	warnTime?: number
 }) => {
-	const [timeToStart, setTimeToStart] = React.useState(
-		startsInMinutes(startTime),
-	)
+	const [timeToStart, setTimeToStart] = React.useState({
+		text: diff(startTime),
+		minutes: startsInMinutes(startTime),
+	})
 	React.useEffect(() => {
 		const interval = setInterval(() => {
-			setTimeToStart(startsInMinutes(startTime))
+			setTimeToStart({
+				text: diff(startTime),
+				minutes: startsInMinutes(startTime),
+			})
 		}, 1000 * 60)
 
 		return () => clearInterval(interval)
@@ -31,10 +38,12 @@ const Countdown = ({
 	return (
 		<td
 			className={
-				timeToStart > 0 && timeToStart <= (warnTime || 5) ? 'time hot' : 'time'
+				timeToStart.minutes > 0 && timeToStart.minutes <= (warnTime || 5)
+					? 'time hot'
+					: 'time'
 			}
 		>
-			{timeToStart > 0 ? `${timeToStart}m` : '-'}
+			{timeToStart.minutes > 0 ? timeToStart.text : '-'}
 		</td>
 	)
 }
