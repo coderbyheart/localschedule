@@ -38,12 +38,13 @@ const Countdown = ({
 	return (
 		<td
 			className={
-				timeToStart.minutes > 0 && timeToStart.minutes <= (warnTime || 5)
+				timeToStart.minutes >= 0 && timeToStart.minutes <= (warnTime || 5)
 					? 'time hot'
 					: 'time'
 			}
 		>
-			{timeToStart.minutes > 0 ? timeToStart.text : '-'}
+			{timeToStart.minutes >= 0 && timeToStart.text}
+			{timeToStart.minutes < 0 && '-'}
 		</td>
 	)
 }
