@@ -64,7 +64,7 @@
     ]
   },
   "dependencies": {
-    "date-fns": "^2.13.0",
+    "date-fns": "^2.14.0",
     "date-fns-tz": "^1.0.10",
     "feather-icons": "^4.28.0",
     "react": "^16.13.1",
