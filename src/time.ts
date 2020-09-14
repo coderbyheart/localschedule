@@ -6,7 +6,7 @@ export const toUserTime = ({
 }: {
 	conferenceDate: string
 	eventTimezoneName: string
-}) => (time: number) => {
+}) => (time: number): Date => {
 	const minutes = time % 100
 	const hours = (time - minutes) / 100
 	return zonedTimeToUtc(
@@ -19,7 +19,7 @@ export const toUserTime = ({
 }
 export const formatUserTime = ({ userTimeZone }: { userTimeZone: string }) => (
 	date: Date,
-) => format(date, 'HH:mm', { timeZone: userTimeZone })
+): string => format(date, 'HH:mm', { timeZone: userTimeZone })
 
 export const toEventTime = ({
 	conferenceDate,
@@ -27,7 +27,7 @@ export const toEventTime = ({
 }: {
 	conferenceDate: string
 	userTimeZone: string
-}) => (time: number) => {
+}) => (time: number): Date => {
 	const minutes = time % 100
 	const hours = (time - minutes) / 100
 	return zonedTimeToUtc(
@@ -38,4 +38,4 @@ export const toEventTime = ({
 		userTimeZone,
 	)
 }
-export const formatEventTime = (date: Date) => format(date, 'HH:mm')
+export const formatEventTime = (date: Date): string => format(date, 'HH:mm')
