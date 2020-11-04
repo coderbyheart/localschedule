@@ -67,8 +67,8 @@
     "date-fns": "2.16.1",
     "date-fns-tz": "^1.0.12",
     "feather-icons": "^4.28.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "styled-components": "5.2.0"
   },
   "release": {
