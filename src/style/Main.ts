@@ -18,6 +18,8 @@ export const Headline = styled.h1`
 	}
 `
 
+export const TitleActions = styled.div``
+
 export const Title = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -29,5 +31,8 @@ export const Title = styled.div`
 	}
 	h1 {
 		margin: 0;
+	}
+	${TitleActions} {
+		display: flex;
 	}
 `

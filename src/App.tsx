@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { Footer } from './style/Footer'
-import { Main, Info, Headline, Title } from './style/Main'
+import { Main, Info, Headline, Title, TitleActions } from './style/Main'
 import { Theme, dark, light } from './style/theme'
 import { GlobalStyle } from './style/Global'
 import { Schedule } from './Schedule'
@@ -13,6 +13,8 @@ import { ThemeSwitcher } from './ThemeSwitcher'
 
 import LockIcon from 'feather-icons/dist/icons/lock.svg'
 import UnLockIcon from 'feather-icons/dist/icons/unlock.svg'
+import EyeOffIcon from 'feather-icons/dist/icons/eye-off.svg'
+import EyeIcon from 'feather-icons/dist/icons/eye.svg'
 import { TimeZoneSelector } from './timezones'
 
 export const App = () => {
@@ -35,11 +37,15 @@ export const App = () => {
 			1730: 'Dinner Break',
 			1900: 'Evening Activities',
 		},
+		hidePastSessions: false,
 	}
 	const hash =
 		new URLSearchParams(window.location.search).get('schedule') ??
 		new URL(window.location.href).hash?.substr(1) ??
 		false
+
+	const hidePastSessionsDefault =
+		new URLSearchParams(window.location.search).get('hidePastSessions') !== null
 
 	if (hash) {
 		cfg = {
@@ -56,6 +62,9 @@ export const App = () => {
 	const [updatedTimeZone, updateTimeZone] = useState(cfg.tz)
 	const [updatedSessions, updateSessions] = useState(cfg.sessions)
 	const [editing, setEditing] = useState(false)
+	const [hidePastSessions, setHidePastSessions] = useState(
+		hidePastSessionsDefault,
+	)
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />
@@ -99,6 +108,7 @@ export const App = () => {
 									onChange={({ target: { value } }) => updateTimeZone(value)}
 								/>
 							</DateEditor>
+
 							<ThemeSwitcher
 								currentTheme={theme}
 								darkTheme={dark}
@@ -140,17 +150,24 @@ export const App = () => {
 							<Headline>
 								{updatedName}: {updatedDay}
 							</Headline>
-							<ThemeSwitcher
-								currentTheme={theme}
-								darkTheme={dark}
-								lightTheme={light}
-								onSwitch={updateTheme}
-							/>
+							<TitleActions>
+								<Button onClick={() => setHidePastSessions((h) => !h)}>
+									{hidePastSessions && <EyeOffIcon />}
+									{!hidePastSessions && <EyeIcon />}
+								</Button>
+								<ThemeSwitcher
+									currentTheme={theme}
+									darkTheme={dark}
+									lightTheme={light}
+									onSwitch={updateTheme}
+								/>
+							</TitleActions>
 						</Title>
 						<Schedule
 							sessions={cfg.sessions}
 							eventTimezoneName={cfg.tz}
 							conferenceDate={cfg.day}
+							hidePastSessions={hidePastSessions}
 						/>
 					</>
 				)}

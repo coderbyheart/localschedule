@@ -66,10 +66,12 @@ export const Schedule = ({
 	conferenceDate,
 	eventTimezoneName,
 	sessions,
+	hidePastSessions,
 }: {
 	conferenceDate: string
 	eventTimezoneName: string
 	sessions: { [key: number]: string }
+	hidePastSessions: boolean
 }) => {
 	const userTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
 	const eventTime = toEventTime({ conferenceDate, userTimeZone })
@@ -95,22 +97,28 @@ export const Schedule = ({
 				</tr>
 			</thead>
 			<tbody>
-				{Object.entries(sessions).map(([time, name]) => (
-					<tr key={time}>
-						<td className={'time'}>
-							{formatEventTime(eventTime((time as unknown) as number))}
-						</td>
-						<td className={'time'}>
-							{userFormat(userTime((time as unknown) as number))}
-						</td>
-						<Countdown
-							key={conferenceDate}
-							conferenceDate={userTime(0)}
-							startTime={userTime((time as unknown) as number)}
-						/>
-						<td>{name}</td>
-					</tr>
-				))}
+				{Object.entries(sessions)
+					.filter(
+						([time]) =>
+							!hidePastSessions ||
+							startsInMinutes(userTime((time as unknown) as number)) > 0,
+					)
+					.map(([time, name]) => (
+						<tr key={time}>
+							<td className={'time'}>
+								{formatEventTime(eventTime((time as unknown) as number))}
+							</td>
+							<td className={'time'}>
+								{userFormat(userTime((time as unknown) as number))}
+							</td>
+							<Countdown
+								key={conferenceDate}
+								conferenceDate={userTime(0)}
+								startTime={userTime((time as unknown) as number)}
+							/>
+							<td>{name}</td>
+						</tr>
+					))}
 			</tbody>
 		</Table>
 	)
