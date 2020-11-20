@@ -36,7 +36,10 @@ export const App = () => {
 			1900: 'Evening Activities',
 		},
 	}
-	const hash = new URL(window.location.href).hash?.substr(1) ?? false
+	const hash =
+		new URLSearchParams(window.location.search).get('schedule') ??
+		new URL(window.location.href).hash?.substr(1) ??
+		false
 
 	if (hash) {
 		cfg = {
