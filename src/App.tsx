@@ -87,10 +87,9 @@ export const App = () => {
 										sessions: updatedSessions,
 									}
 									window.location.assign(
-										`${document.location.href.replace(
-											/#.+/,
-											'',
-										)}#${encodeURIComponent(btoa(JSON.stringify(cfg)))}`,
+										`${
+											new URL(document.location.href).origin
+										}#${encodeURIComponent(btoa(JSON.stringify(cfg)))}`,
 									)
 									setEditing(false)
 								}}
@@ -176,6 +175,17 @@ export const App = () => {
 					<p>
 						Click the <LockIcon /> icon to create your own schedule. When done,
 						click the <UnLockIcon /> and share the updated URL.
+					</p>
+					<p>
+						<a href="https://www.notion.so/">Notion</a> user? Use{' '}
+						<a
+							href={`${
+								new URL(document.location.href).origin
+							}?schedule=${encodeURIComponent(btoa(JSON.stringify(cfg)))}`}
+						>
+							this URL
+						</a>{' '}
+						to embed it on any page.
 					</p>
 				</Info>
 			</Main>

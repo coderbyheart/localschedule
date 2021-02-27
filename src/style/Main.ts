@@ -9,6 +9,10 @@ export const Info = styled.div`
 	margin: 1rem;
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+	a {
+		color: ${(props) => props.theme.colors.text};
+	}
 `
 
 export const Headline = styled.h1`
