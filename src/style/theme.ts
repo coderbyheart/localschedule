@@ -10,6 +10,7 @@ export type Theme = {
 		countdownWarning: string
 		borderColor: string
 	}
+	calendarPickerIndicatorFilter: string
 }
 
 declare module 'styled-components' {
@@ -26,6 +27,7 @@ export const dark: Theme = {
 		countdownWarning: '#ff5e007a',
 		borderColor: '#7d7d7d',
 	},
+	calendarPickerIndicatorFilter: 'invert(1);',
 }
 
 export const light: Theme = {
@@ -38,4 +40,5 @@ export const light: Theme = {
 		countdownWarning: '#ff000052',
 		borderColor: '#a7a7a7',
 	},
+	calendarPickerIndicatorFilter: '',
 }

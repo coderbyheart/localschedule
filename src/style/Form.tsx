@@ -41,6 +41,9 @@ export const StyledDaySelector = styled(DaySelector)`
 	height: 30px;
 	color: ${(props) => props.theme.colors.text};
 	margin: 0;
+	::-webkit-calendar-picker-indicator {
+		filter: ${(props) => props.theme.calendarPickerIndicatorFilter};
+	}
 `
 
 export const NumberInput = styled(Input)`
