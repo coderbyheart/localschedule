@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { DaySelector } from '../DaySelector'
 import { wideBreakpoint, mobileBreakpoint } from './settings'
 
 export const Button = styled.button`
@@ -33,9 +34,15 @@ export const Input = styled.input`
 	color: ${(props) => props.theme.colors.text};
 `
 
-export const DateInput = styled(Input)`
+export const StyledDaySelector = styled(DaySelector)`
+	background-color: transparent;
+	border: 1px solid ${(props) => props.theme.colors.text};
+	padding: 0.25rem 0.5rem;
+	height: 30px;
+	color: ${(props) => props.theme.colors.text};
 	margin: 0;
 `
+
 export const NumberInput = styled(Input)`
 	width: 30px;
 	@media (min-width: ${mobileBreakpoint}) {
@@ -51,8 +58,8 @@ export const DateEditor = styled.div`
 		height: 30px;
 	}
 	${Input} + ${Input}, ${Input} + select {
-			margin-top: 0.5rem;
-		}
+		margin-top: 0.5rem;
+	}
 	@media (min-width: ${wideBreakpoint}) {
 		flex-direction: row;
 		${Input} + ${Input}, ${Input} + select {
