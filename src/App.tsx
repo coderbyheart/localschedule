@@ -7,10 +7,15 @@ import { GlobalStyle } from './style/Global'
 import { Schedule } from './Schedule'
 import { format } from 'date-fns'
 import { ThemeProvider } from 'styled-components'
-import { Button, Input, DateEditor, StyledDaySelector } from './style/Form'
+import {
+	Button,
+	Input,
+	DateEditor,
+	StyledDaySelector,
+	StyledTimeZoneSelector,
+} from './style/Form'
 import { Editor } from './Editor'
 import { ThemeSwitcher } from './ThemeSwitcher'
-import { TimeZoneSelector } from './timezones'
 
 import LockIcon from 'feather-icons/dist/icons/lock.svg'
 import UnLockIcon from 'feather-icons/dist/icons/unlock.svg'
@@ -99,7 +104,7 @@ export const App = () => {
 									onChange={({ target: { value } }) => updateName(value)}
 								/>
 								<StyledDaySelector day={updatedDay} onUpdate={updateDay} />
-								<TimeZoneSelector
+								<StyledTimeZoneSelector
 									value={updatedTimeZone}
 									onChange={({ target: { value } }) => updateTimeZone(value)}
 								/>

@@ -349,7 +349,7 @@ export const timezones = [
 	'Pacific/Tongatapu',
 	'Pacific/Wake',
 	'Pacific/Wallis',
-] as const
+]
 
 export const TimeZoneSelector = (
 	props: React.DetailedHTMLProps<
@@ -358,8 +358,19 @@ export const TimeZoneSelector = (
 	>,
 ) => (
 	<select {...props}>
-		{timezones.map((tz) => (
-			<option key={tz}>{tz}</option>
-		))}
+		{timezones
+			.sort((a, b) => {
+				const [, a2, a3] = a.split('/')
+				const [, b2, b3] = b.split('/')
+				return (a3 ?? a2).localeCompare(b3 ?? b2)
+			})
+			.map((tz) => {
+				const [t1, t2, t3] = tz.split('/')
+				return (
+					<option key={tz} value={tz}>
+						{t3 ?? t2} ({t3 === undefined ? t1 : `${t1}/${t2}`})
+					</option>
+				)
+			})}
 	</select>
 )
