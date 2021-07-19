@@ -21,8 +21,7 @@
     "build": "npx webpack --config-name production",
     "start": "webpack-dev-server --config-name development --open",
     "lint": "eslint --ext .js,.ts,.tsx src/**",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect && husky install",
+    "prepare": "husky install",
     "postinstall": "check-node-version --package",
     "test": "jest"
   },
