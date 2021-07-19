@@ -53,9 +53,12 @@ export const App = () => {
 		new URLSearchParams(window.location.search).get('hidePastSessions') !== null
 
 	if (hash) {
+		const payload = decodeURIComponent(hash)
 		cfg = {
 			...cfg,
-			...JSON.parse(atob(decodeURIComponent(hash))),
+			...JSON.parse(
+				payload.substr(0, 3) === 'v2:' ? payload.substr(3) : atob(payload),
+			),
 		}
 		console.log(cfg)
 	}
@@ -89,7 +92,7 @@ export const App = () => {
 									window.location.assign(
 										`${
 											new URL(document.location.href).origin
-										}#${encodeURIComponent(btoa(JSON.stringify(cfg)))}`,
+										}#${encodeURIComponent(`v2:${JSON.stringify(cfg)}`)}`,
 									)
 									setEditing(false)
 								}}
@@ -181,7 +184,7 @@ export const App = () => {
 						<a
 							href={`${
 								new URL(document.location.href).origin
-							}?schedule=${encodeURIComponent(btoa(JSON.stringify(cfg)))}`}
+							}?schedule=${encodeURIComponent(`v2:${JSON.stringify(cfg)}`)}`}
 						>
 							this URL
 						</a>{' '}
