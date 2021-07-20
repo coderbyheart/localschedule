@@ -24,7 +24,6 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       - run: npm ci --no-audit
-      - run: npx tsc
       - run: npm test
       - run: npm run build
       - run: npm run lint
