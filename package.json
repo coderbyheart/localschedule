@@ -29,7 +29,7 @@
     "@bifravst/code-style": "8.0.134",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-angular": "12.1.4",
-    "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "8.0.2",
+    "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "8.0.3",
     "@svgr/webpack": "5.5.0",
     "@testing-library/react": "12.0.0",
     "@types/jest": "26.0.24",
