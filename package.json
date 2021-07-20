@@ -88,21 +88,7 @@
     "npm": ">=6.0.0"
   },
   "jest": {
-    "testURL": "http://localhost",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": ".+\\.spec\\.tsx?$",
-    "globals": {
-      "ts-jest": {
-        "diagnostics": true
-      }
-    }
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
   }
 }
