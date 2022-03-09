@@ -10,7 +10,7 @@
     "prepare": "husky install",
     "test": "jest --passWithNoTests",
     "postinstall": "check-node-version --package",
-    "lint": "eslint --ext .js,.ts,.tsx src/**"
+    "lint": "eslint --ext .js,.ts,.tsx src/*.{ts,tsx}"
   },
   "repository": {
     "type": "git",
