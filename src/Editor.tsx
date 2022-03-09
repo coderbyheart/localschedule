@@ -1,11 +1,8 @@
-import * as React from 'react'
-import { useState, useRef } from 'react'
-import { Table } from './style/Table'
-import { Input, NumberInput, DeleteButton, AddButton } from './style/Form'
-
-import AddIcon from 'feather-icons/dist/icons/plus-circle.svg'
-import DeleteIcon from 'feather-icons/dist/icons/x-circle.svg'
-import { formatEventTime, toEventTime } from './time'
+import { formatEventTime, toEventTime } from 'app/time'
+import { useRef, useState } from 'react'
+import { AddIcon, DeleteIcon } from 'style/FeatherIcons'
+import { AddButton, DeleteButton, Input, NumberInput } from 'style/Form'
+import { Table } from 'style/Table'
 
 type AddSession = {
 	name: string
@@ -137,16 +134,16 @@ export const Editor = ({
 					{Object.entries(sessions).map(([time, name]) => (
 						<tr key={time}>
 							<td>
-								<DeleteButton>
-									<DeleteIcon
-										onClick={() => {
-											onDelete((time as unknown) as number)
-										}}
-									/>
+								<DeleteButton
+									onClick={() => {
+										onDelete(time as unknown as number)
+									}}
+								>
+									<DeleteIcon />
 								</DeleteButton>
 							</td>
 							<td className={'time'}>
-								{formatEventTime(eventTime((time as unknown) as number))}
+								{formatEventTime(eventTime(time as unknown as number))}
 							</td>
 							<td>{name}</td>
 						</tr>

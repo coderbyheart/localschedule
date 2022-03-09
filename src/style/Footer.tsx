@@ -1,8 +1,6 @@
-import * as React from 'react'
+import { GithubIcon } from 'style/FeatherIcons'
+import { wideBreakpoint } from 'style/settings'
 import styled from 'styled-components'
-import { wideBreakpoint } from './settings'
-
-import GithubIcon from 'feather-icons/dist/icons/github.svg'
 
 const StyledFooter = styled.footer`
 	padding: 1rem 2rem;
@@ -45,7 +43,7 @@ export const Footer = () => (
 		<Copyright>
 			<Nav>
 				<a
-					href={GLOBAL_GITHUB_URL}
+					href={import.meta.env.PUBLIC_HOMEPAGE}
 					rel="noopener noreferrer"
 					target="_blank"
 					title={'Contribute to this project on GitHub'}
@@ -54,7 +52,7 @@ export const Footer = () => (
 				</a>
 			</Nav>
 			<p>
-				&copy; 2020{' '}
+				&copy; 2020&mdash;2022{' '}
 				<a
 					href="https://coderbyheart.com"
 					rel="noopener noreferrer"

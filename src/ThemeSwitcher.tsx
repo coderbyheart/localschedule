@@ -1,9 +1,6 @@
-import * as React from 'react'
-import { Theme } from './style/theme'
-import { Button } from './style/Form'
-
-import LightModeIcon from 'feather-icons/dist/icons/sun.svg'
-import DarkModeIcon from 'feather-icons/dist/icons/moon.svg'
+import { DarkModeIcon, LightModeIcon } from 'style/FeatherIcons'
+import { Button } from 'style/Form'
+import type { Theme } from 'style/theme'
 
 export const ThemeSwitcher = ({
 	currentTheme,

@@ -1,15 +1,35 @@
 {
-  "extends": ["@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript", "plugin:react/recommended"],
-  "settings": {
-    "react": {
-      "version": "latest"
-    }
+  "extends": [
+    "react-app",
+    "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [".*"],
+            "message": "Usage of relative imports is not allowed. Use aliased imports."
+          }
+        ]
+      }
+    ]
   },
   "overrides": [
     {
       "files": ["*.tsx"],
       "rules": {
         "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    },
+    {
+      "files": ["*.d.ts"],
+      "rules": {
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/ban-types": "off"
       }
     }
   ]

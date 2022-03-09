@@ -1,11 +1,8 @@
 [build]
     publish = "dist"
     command = '''
-    echo $COMMIT_REF > .version;
-    ./node_modules/.bin/tsc;
+    export PUBLIC_VERSION=$COMMIT_REF
     npm run build;
-    cp -v web/* dist;
-    node scripts/renderIndex.js > dist/index.html;
     '''
 [build.environment]
-  NODE_VERSION = "15"
+  NODE_VERSION = "16"

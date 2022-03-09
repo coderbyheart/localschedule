@@ -1,14 +1,23 @@
 {
-  "extends": "@bifravst/code-style/tsconfig.json",
-  "include": ["src/*.tsx", "src/*.ts"],
   "compilerOptions": {
-    "outDir": "dist/",
+    "target": "esnext",
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "module": "es6",
-    "target": "es5",
-    "lib": ["es6", "dom"],
-    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "allowJs": true
-  }
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "noFallthroughCasesInSwitch": true,
+    "importsNotUsedAsValues": "error",
+    "baseUrl": "src",
+    "paths": {
+      "app/*": ["*"],
+      "style/*": ["style/*"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
 }

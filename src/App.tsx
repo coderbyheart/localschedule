@@ -1,26 +1,21 @@
-import * as React from 'react'
-import { useState } from 'react'
-import { Footer } from './style/Footer'
-import { Main, Info, Headline, Title, TitleActions } from './style/Main'
-import { Theme, dark, light } from './style/theme'
-import { GlobalStyle } from './style/Global'
-import { Schedule } from './Schedule'
+import { Editor } from 'app/Editor'
+import { Schedule } from 'app/Schedule'
+import { ThemeSwitcher } from 'app/ThemeSwitcher'
 import { format } from 'date-fns'
-import { ThemeProvider } from 'styled-components'
+import { useState } from 'react'
+import { EyeIcon, EyeOffIcon, LockIcon, UnLockIcon } from 'style/FeatherIcons'
+import { Footer } from 'style/Footer'
 import {
 	Button,
-	Input,
 	DateEditor,
+	Input,
 	StyledDaySelector,
 	StyledTimeZoneSelector,
-} from './style/Form'
-import { Editor } from './Editor'
-import { ThemeSwitcher } from './ThemeSwitcher'
-
-import LockIcon from 'feather-icons/dist/icons/lock.svg'
-import UnLockIcon from 'feather-icons/dist/icons/unlock.svg'
-import EyeOffIcon from 'feather-icons/dist/icons/eye-off.svg'
-import EyeIcon from 'feather-icons/dist/icons/eye.svg'
+} from 'style/Form'
+import { GlobalStyle } from 'style/Global'
+import { Headline, Info, Main, Title, TitleActions } from 'style/Main'
+import { dark, light, Theme } from 'style/theme'
+import { ThemeProvider } from 'styled-components'
 
 export const App = () => {
 	let cfg = {
@@ -46,7 +41,7 @@ export const App = () => {
 	}
 	const hash =
 		new URLSearchParams(window.location.search).get('schedule') ??
-		new URL(window.location.href).hash?.substr(1) ??
+		new URL(window.location.href).hash?.slice(1) ??
 		false
 
 	const hidePastSessionsDefault =
@@ -57,10 +52,9 @@ export const App = () => {
 		cfg = {
 			...cfg,
 			...JSON.parse(
-				payload.substr(0, 3) === 'v2:' ? payload.substr(3) : atob(payload),
+				payload.startsWith('v2:') ? payload.slice(3) : atob(payload),
 			),
 		}
-		console.log(cfg)
 	}
 	const [theme, updateTheme] = useState<Theme>(
 		window.localStorage.getItem('theme') === 'light' ? light : dark,
@@ -111,7 +105,6 @@ export const App = () => {
 									onChange={({ target: { value } }) => updateTimeZone(value)}
 								/>
 							</DateEditor>
-
 							<ThemeSwitcher
 								currentTheme={theme}
 								darkTheme={dark}
@@ -154,7 +147,10 @@ export const App = () => {
 								{updatedName}: {updatedDay}
 							</Headline>
 							<TitleActions>
-								<Button onClick={() => setHidePastSessions((h) => !h)}>
+								<Button
+									title="Hide past sessions"
+									onClick={() => setHidePastSessions((h) => !h)}
+								>
 									{hidePastSessions && <EyeOffIcon />}
 									{!hidePastSessions && <EyeIcon />}
 								</Button>

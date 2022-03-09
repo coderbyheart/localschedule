@@ -2,75 +2,72 @@
   "name": "@coderbyheart/localschedule",
   "version": "0.0.0-development",
   "description": "Create a shareable schedule with times in your local timezone. Great for remote conferences!",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "test": "jest --passWithNoTests",
+    "postinstall": "check-node-version --package",
+    "lint": "eslint --ext .js,.ts,.tsx src/**"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/coderbyheart/localschedule.git"
   },
-  "keywords": [
-    "Schedule",
-    "Timezones",
-    "Conferences"
-  ],
   "author": "Markus Tacker | https://coderbyheart.com/",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/coderbyheart/localschedule/issues"
   },
   "homepage": "https://github.com/coderbyheart/localschedule#readme",
-  "scripts": {
-    "build": "npx webpack --config-name production",
-    "start": "webpack-dev-server --config-name development --open",
-    "lint": "eslint --ext .js,.ts,.tsx src/**",
-    "prepare": "husky install",
-    "postinstall": "check-node-version --package",
-    "test": "jest"
+  "keywords": [
+    "Schedule",
+    "Timezones",
+    "Conferences"
+  ],
+  "dependencies": {
+    "@nordicsemiconductor/from-env": "1.0.0",
+    "ajv": "8.10.0",
+    "date-fns-tz": "1.3.0",
+    "feather-icons": "4.28.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-router-dom": "6.2.2",
+    "styled-components": "5.3.3"
   },
   "devDependencies": {
-    "@bifravst/code-style": "8.0.134",
-    "@commitlint/cli": "12.1.4",
-    "@commitlint/config-angular": "12.1.4",
-    "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "8.0.3",
-    "@svgr/webpack": "5.5.0",
-    "@testing-library/react": "12.0.0",
-    "@types/jest": "26.0.24",
-    "@types/react": "17.0.14",
-    "@types/react-dom": "17.0.9",
-    "@types/styled-components": "5.1.11",
-    "check-node-version": "4.1.0",
-    "eslint": "7.31.0",
-    "eslint-plugin-react": "7.24.0",
-    "fetch-ponyfill": "7.1.0",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.35",
+    "@nordicsemiconductor/object-to-env": "4.1.0",
+    "@swc/jest": "0.2.20",
+    "@testing-library/react": "12.1.4",
+    "@types/feather-icons": "4.7.0",
+    "@types/jest": "27.4.1",
+    "@types/react": "17.0.39",
+    "@types/react-dom": "17.0.13",
+    "@types/styled-components": "5.1.24",
+    "@vitejs/plugin-react": "1.2.0",
+    "check-node-version": "4.2.1",
+    "eslint-config-react-app": "7.0.0",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-no-restricted-imports": "0.0.0",
     "handlebars": "4.7.7",
-    "husky": "7.0.1",
-    "jest": "27.0.6",
-    "lint-staged": "11.0.1",
-    "localforage": "1.9.0",
-    "prettier": "2.3.2",
-    "semantic-release": "17.4.4",
-    "source-map-loader": "3.0.0",
-    "ts-jest": "27.0.3",
-    "ts-loader": "9.2.3",
-    "typescript": "4.3.5",
-    "webpack": "5.45.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "3.11.2"
+    "jest": "27.5.1",
+    "vite": "2.8.6"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "eslint --ext .js,.ts"
+      "eslint --ext .js,.ts,.jsx,.tsx"
     ],
-    "*.{md,json,yaml,yml,js}": [
+    "*.{md,json,yaml,yml,html}": [
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "date-fns": "2.22.1",
-    "date-fns-tz": "1.1.4",
-    "feather-icons": "^4.28.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "styled-components": "5.3.0"
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
   },
   "release": {
     "branches": [
@@ -83,12 +80,36 @@
       "@semantic-release/github"
     ]
   },
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=6.0.0"
-  },
+  "prettier": "@nordicsemiconductor/asset-tracker-cloud-code-style/.prettierrc",
   "jest": {
-    "preset": "ts-jest",
+    "testRegex": ".+\\.spec\\.tsx?$",
+    "moduleNameMapper": {
+      "^app/(.*)$": "<rootDir>/src/$1",
+      "^style/(.*)$": "<rootDir>/src/style/$1"
+    },
+    "transform": {
+      "^.+\\.(t|j)sx?$": [
+        "@swc/jest",
+        {
+          "sourceMaps": true,
+          "jsc": {
+            "parser": {
+              "syntax": "typescript",
+              "tsx": true
+            },
+            "transform": {
+              "react": {
+                "runtime": "automatic"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "extensionsToTreatAsEsm": [
+      ".ts",
+      ".tsx"
+    ],
     "testEnvironment": "jsdom"
   }
 }

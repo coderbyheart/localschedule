@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { Table } from './style/Table'
 import {
 	formatEventTime,
-	toEventTime,
 	formatUserTime,
+	toEventTime,
 	toUserTime,
-} from './time'
-import { formatDistance, differenceInCalendarDays } from 'date-fns'
+} from 'app/time'
+import { differenceInCalendarDays, formatDistance } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { Table } from 'style/Table'
 
 const diff = (startTime: Date, conferenceDate: Date) => {
 	const now = new Date()
@@ -32,11 +32,11 @@ const Countdown = ({
 	conferenceDate: Date
 	warnTime?: number
 }) => {
-	const [timeToStart, setTimeToStart] = React.useState({
+	const [timeToStart, setTimeToStart] = useState({
 		text: diff(startTime, conferenceDate),
 		minutes: startsInMinutes(startTime),
 	})
-	React.useEffect(() => {
+	useEffect(() => {
 		const interval = setInterval(() => {
 			setTimeToStart({
 				text: diff(startTime, conferenceDate),
@@ -45,7 +45,7 @@ const Countdown = ({
 		}, 1000 * 60)
 
 		return () => clearInterval(interval)
-	}, [startTime])
+	}, [startTime, conferenceDate])
 	return (
 		<td
 			className={
@@ -101,20 +101,20 @@ export const Schedule = ({
 					.filter(
 						([time]) =>
 							!hidePastSessions ||
-							startsInMinutes(userTime((time as unknown) as number)) > 0,
+							startsInMinutes(userTime(time as unknown as number)) > 0,
 					)
 					.map(([time, name]) => (
 						<tr key={time}>
 							<td className={'time'}>
-								{formatEventTime(eventTime((time as unknown) as number))}
+								{formatEventTime(eventTime(time as unknown as number))}
 							</td>
 							<td className={'time'}>
-								{userFormat(userTime((time as unknown) as number))}
+								{userFormat(userTime(time as unknown as number))}
 							</td>
 							<Countdown
 								key={conferenceDate}
 								conferenceDate={userTime(0)}
-								startTime={userTime((time as unknown) as number)}
+								startTime={userTime(time as unknown as number)}
 							/>
 							<td>{name}</td>
 						</tr>

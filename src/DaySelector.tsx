@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { useState } from 'react'
 import { format } from 'date-fns'
+import { useState } from 'react'
 
 export const DaySelector = ({
 	day,

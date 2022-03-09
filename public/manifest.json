@@ -1,0 +1,8 @@
+{
+  "short_name": "Local Schedule",
+  "name": "Local Schedule: Conference schedules in your local time",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#000000"
+}

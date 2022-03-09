@@ -1,7 +1,7 @@
+import { DaySelector } from 'app/DaySelector'
+import { TimeZoneSelector } from 'app/timezones'
+import { mobileBreakpoint, wideBreakpoint } from 'style/settings'
 import styled from 'styled-components'
-import { DaySelector } from '../DaySelector'
-import { TimeZoneSelector } from '../timezones'
-import { wideBreakpoint, mobileBreakpoint } from './settings'
 
 export const Button = styled.button`
 	background-color: transparent;
@@ -11,9 +11,7 @@ export const Button = styled.button`
 	border: 0;
 	display: flex;
 	align-items: center;
-	svg {
-		margin-right: 0.5rem;
-	}
+	margin-right: 0.5rem;
 `
 
 export const DeleteButton = styled(Button)`

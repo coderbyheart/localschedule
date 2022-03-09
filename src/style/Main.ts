@@ -1,5 +1,5 @@
+import { wideBreakpoint } from 'style/settings'
 import styled from 'styled-components'
-import { wideBreakpoint } from './settings'
 
 export const Main = styled.main``
 

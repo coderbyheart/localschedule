@@ -1,18 +1,30 @@
 declare module '*.svg' {
-	const content: React.StatelessComponent<React.SVGAttributes<SVGElement>>
-	export default content
+	const ref: string
+	export default ref
 }
-/**
- * This string is replaced through webpack.
- */
-declare const GLOBAL_VERSION: string
+declare module '*.png' {
+	const ref: string
+	export default ref
+}
 
-/**
- * This string is replaced through webpack.
- */
-declare const GLOBAL_IS_PRODUCTION: boolean
+declare module '*.css'
 
-/**
- * The GitHub URL of this project
- */
-declare const GLOBAL_GITHUB_URL: string
+interface ImportMeta {
+	hot: {
+		accept: Function
+		dispose: Function
+	}
+	env: {
+		// Vite built-in
+		MODE: string
+		BASE_URL?: string
+		// Custom
+		PUBLIC_VERSION: string
+		PUBLIC_HOMEPAGE: string
+		PUBLIC_ISSUES: string
+		PUBLIC_MANIFEST_NAME: string
+		PUBLIC_MANIFEST_SHORT_NAME: string
+		PUBLIC_MANIFEST_THEME_COLOR: string
+		PUBLIC_MANIFEST_BACKGROUND_COLOR: string
+	}
+}

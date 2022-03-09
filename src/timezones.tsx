@@ -1,4 +1,4 @@
-import * as React from 'react'
+import type { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 
 export const timezones = [
 	'Africa/Abidjan',
@@ -352,8 +352,8 @@ export const timezones = [
 ]
 
 export const TimeZoneSelector = (
-	props: React.DetailedHTMLProps<
-		React.SelectHTMLAttributes<HTMLSelectElement>,
+	props: DetailedHTMLProps<
+		SelectHTMLAttributes<HTMLSelectElement>,
 		HTMLSelectElement
 	>,
 ) => (
