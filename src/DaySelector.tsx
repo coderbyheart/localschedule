@@ -1,19 +1,17 @@
+import styles from 'app/DaySelector.module.css'
 import { format } from 'date-fns'
 import { useState } from 'react'
-
 export const DaySelector = ({
 	day,
 	onUpdate,
-	className,
 }: {
 	day: string
-	className?: string
 	onUpdate: (date: string) => unknown
 }) => {
 	const [value, setValue] = useState<string>(day)
 	return (
 		<input
-			className={className}
+			className={styles.DaySelector}
 			type="date"
 			value={value}
 			aria-label="date-input"

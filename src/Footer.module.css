@@ -1,0 +1,34 @@
+.Footer {
+  padding: 1rem 2rem;
+  opacity: 0.75;
+  color: var(--color-text);
+}
+@media (min-width: 900px) {
+  .Footer {
+    padding: 4rem;
+  }
+}
+.Footer a {
+  color: var(--color-text);
+}
+.Footer p {
+  line-height: 1.5rem;
+}
+
+.Copyright {
+  max-width: 900px;
+  margin: auto;
+  font-size: 80%;
+  opacity: 0.8;
+  text-align: center;
+  margin-top: 2rem;
+}
+@media (min-width: 900px) {
+  .Copyright {
+    margin-top: 4rem;
+  }
+}
+
+.Nav a {
+  margin: 0 0.5rem;
+}

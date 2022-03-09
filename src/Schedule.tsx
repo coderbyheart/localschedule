@@ -1,3 +1,4 @@
+import tableStyles from 'app/Table.module.css'
 import {
 	formatEventTime,
 	formatUserTime,
@@ -6,7 +7,6 @@ import {
 } from 'app/time'
 import { differenceInCalendarDays, formatDistance } from 'date-fns'
 import { useEffect, useState } from 'react'
-import { Table } from 'style/Table'
 
 const diff = (startTime: Date, conferenceDate: Date) => {
 	const now = new Date()
@@ -79,7 +79,7 @@ export const Schedule = ({
 	const userFormat = formatUserTime({ userTimeZone })
 
 	return (
-		<Table>
+		<table className={tableStyles.Table}>
 			<thead>
 				<tr>
 					<th>
@@ -120,6 +120,6 @@ export const Schedule = ({
 						</tr>
 					))}
 			</tbody>
-		</Table>
+		</table>
 	)
 }

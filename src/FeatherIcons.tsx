@@ -1,5 +1,5 @@
+import styles from 'app/FeatherIcons.module.css'
 import { icons as featherIcons } from 'feather-icons'
-import styles from 'style/FeatherIcons.module.css'
 
 type IconOptions = {
 	/** defaults to 1.5 */

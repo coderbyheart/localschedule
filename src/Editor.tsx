@@ -1,8 +1,8 @@
+import { AddIcon, DeleteIcon } from 'app/FeatherIcons'
+import formStyles from 'app/Form.module.css'
+import tableStyles from 'app/Table.module.css'
 import { formatEventTime, toEventTime } from 'app/time'
 import { useRef, useState } from 'react'
-import { AddIcon, DeleteIcon } from 'style/FeatherIcons'
-import { AddButton, DeleteButton, Input, NumberInput } from 'style/Form'
-import { Table } from 'style/Table'
 
 type AddSession = {
 	name: string
@@ -64,7 +64,7 @@ export const Editor = ({
 
 	return (
 		<>
-			<Table>
+			<table className={tableStyles.Table}>
 				<thead>
 					<tr>
 						<th></th>
@@ -75,17 +75,19 @@ export const Editor = ({
 				<tbody>
 					<tr>
 						<td>
-							<AddButton
+							<button
+								className={formStyles.AddButton}
 								disabled={!isInputValid()}
 								onClick={() => {
 									addAction(add)
 								}}
 							>
 								<AddIcon />
-							</AddButton>
+							</button>
 						</td>
 						<td className="time">
-							<NumberInput
+							<input
+								className={formStyles.NumberInput}
 								ref={inputRef}
 								type="text"
 								inputMode="numeric"
@@ -98,7 +100,8 @@ export const Editor = ({
 								}}
 							/>
 							{':'}
-							<NumberInput
+							<input
+								className={formStyles.NumberInput}
 								type="text"
 								inputMode="numeric"
 								value={add.minute}
@@ -111,7 +114,8 @@ export const Editor = ({
 							/>
 						</td>
 						<td>
-							<Input
+							<input
+								className={formStyles.Input}
 								type="text"
 								value={add.name}
 								onKeyUp={({ key }) => {
@@ -134,13 +138,14 @@ export const Editor = ({
 					{Object.entries(sessions).map(([time, name]) => (
 						<tr key={time}>
 							<td>
-								<DeleteButton
+								<button
+									className={formStyles.DeleteButton}
 									onClick={() => {
 										onDelete(time as unknown as number)
 									}}
 								>
 									<DeleteIcon />
-								</DeleteButton>
+								</button>
 							</td>
 							<td className={'time'}>
 								{formatEventTime(eventTime(time as unknown as number))}
@@ -149,7 +154,7 @@ export const Editor = ({
 						</tr>
 					))}
 				</tbody>
-			</Table>
+			</table>
 		</>
 	)
 }

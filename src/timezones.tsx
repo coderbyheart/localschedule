@@ -1,3 +1,4 @@
+import styles from 'app/TimeZoneSelector.module.css'
 import type { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 
 export const timezones = [
@@ -352,12 +353,15 @@ export const timezones = [
 ]
 
 export const TimeZoneSelector = (
-	props: DetailedHTMLProps<
-		SelectHTMLAttributes<HTMLSelectElement>,
-		HTMLSelectElement
+	props: Omit<
+		DetailedHTMLProps<
+			SelectHTMLAttributes<HTMLSelectElement>,
+			HTMLSelectElement
+		>,
+		'className'
 	>,
 ) => (
-	<select {...props}>
+	<select {...props} className={styles.TimeZoneSelector}>
 		{timezones
 			.sort((a, b) => {
 				const [, a2, a3] = a.split('/')

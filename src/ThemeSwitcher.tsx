@@ -1,40 +1,42 @@
-import { DarkModeIcon, LightModeIcon } from 'style/FeatherIcons'
-import { Button } from 'style/Form'
-import type { Theme } from 'style/theme'
+import { DarkModeIcon, LightModeIcon } from 'app/FeatherIcons'
+import formStyles from 'app/Form.module.css'
+
+export enum Theme {
+	light = 'light',
+	dark = 'dark',
+}
 
 export const ThemeSwitcher = ({
 	currentTheme,
-	darkTheme,
-	lightTheme,
 	onSwitch,
 }: {
 	currentTheme: Theme
-	darkTheme: Theme
-	lightTheme: Theme
 	onSwitch: (theme: Theme) => void
 }) => (
 	<>
-		{currentTheme === darkTheme && (
-			<Button
+		{currentTheme === Theme.dark && (
+			<button
+				className={formStyles.Button}
 				title="switch to light mode"
 				onClick={() => {
-					onSwitch(lightTheme)
-					window.localStorage.setItem('theme', 'light')
+					onSwitch(Theme.light)
+					window.localStorage.setItem('theme', Theme.light)
 				}}
 			>
 				<LightModeIcon />
-			</Button>
+			</button>
 		)}
-		{currentTheme === lightTheme && (
-			<Button
+		{currentTheme === Theme.light && (
+			<button
+				className={formStyles.Button}
 				title="switch to dark mode"
 				onClick={() => {
-					onSwitch(darkTheme)
-					window.localStorage.setItem('theme', 'dark')
+					onSwitch(Theme.dark)
+					window.localStorage.setItem('theme', Theme.dark)
 				}}
 			>
 				<DarkModeIcon />
-			</Button>
+			</button>
 		)}
 	</>
 )

@@ -1,21 +1,20 @@
+import styles from 'app/App.module.css'
+import { DaySelector } from 'app/DaySelector'
 import { Editor } from 'app/Editor'
+import { EyeIcon, EyeOffIcon, LockIcon, UnLockIcon } from 'app/FeatherIcons'
+import { Footer } from 'app/Footer'
+import formStyles from 'app/Form.module.css'
 import { Schedule } from 'app/Schedule'
-import { ThemeSwitcher } from 'app/ThemeSwitcher'
+import { Theme, ThemeSwitcher } from 'app/ThemeSwitcher'
+import { TimeZoneSelector } from 'app/timezones'
 import { format } from 'date-fns'
-import { useState } from 'react'
-import { EyeIcon, EyeOffIcon, LockIcon, UnLockIcon } from 'style/FeatherIcons'
-import { Footer } from 'style/Footer'
-import {
-	Button,
-	DateEditor,
-	Input,
-	StyledDaySelector,
-	StyledTimeZoneSelector,
-} from 'style/Form'
-import { GlobalStyle } from 'style/Global'
-import { Headline, Info, Main, Title, TitleActions } from 'style/Main'
-import { dark, light, Theme } from 'style/theme'
-import { ThemeProvider } from 'styled-components'
+import { useEffect, useState } from 'react'
+
+let defaultTheme = Theme.light
+if (typeof window.matchMedia === 'function') {
+	const match = window.matchMedia('(prefers-color-scheme: dark)')
+	defaultTheme = match.matches ? Theme.dark : Theme.light
+}
 
 export const App = () => {
 	let cfg = {
@@ -57,7 +56,9 @@ export const App = () => {
 		}
 	}
 	const [theme, updateTheme] = useState<Theme>(
-		window.localStorage.getItem('theme') === 'light' ? light : dark,
+		(window.localStorage.getItem('theme') ?? defaultTheme) === 'dark'
+			? Theme.dark
+			: Theme.light,
 	)
 	const [updatedName, updateName] = useState(cfg.name)
 	const [updatedDay, updateDay] = useState(cfg.day)
@@ -67,14 +68,19 @@ export const App = () => {
 	const [hidePastSessions, setHidePastSessions] = useState(
 		hidePastSessionsDefault,
 	)
+
+	useEffect(() => {
+		document.documentElement.setAttribute('data-theme', theme)
+	}, [theme])
+
 	return (
-		<ThemeProvider theme={theme}>
-			<GlobalStyle />
-			<Main>
+		<>
+			<main>
 				{editing && (
 					<>
-						<Title>
-							<Button
+						<div className={styles.Title}>
+							<button
+								className={formStyles.Button}
 								title="Save changes"
 								onClick={() => {
 									const cfg = {
@@ -92,26 +98,22 @@ export const App = () => {
 								}}
 							>
 								<UnLockIcon />
-							</Button>
-							<DateEditor>
-								<Input
+							</button>
+							<div className={formStyles.DateEditor}>
+								<input
+									className={formStyles.Input}
 									type="text"
 									value={updatedName}
 									onChange={({ target: { value } }) => updateName(value)}
 								/>
-								<StyledDaySelector day={updatedDay} onUpdate={updateDay} />
-								<StyledTimeZoneSelector
+								<DaySelector day={updatedDay} onUpdate={updateDay} />
+								<TimeZoneSelector
 									value={updatedTimeZone}
 									onChange={({ target: { value } }) => updateTimeZone(value)}
 								/>
-							</DateEditor>
-							<ThemeSwitcher
-								currentTheme={theme}
-								darkTheme={dark}
-								lightTheme={light}
-								onSwitch={updateTheme}
-							/>
-						</Title>
+							</div>
+							<ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
+						</div>
 						<Editor
 							onAdd={(add) => {
 								updateSessions((sessions) => ({
@@ -134,34 +136,31 @@ export const App = () => {
 				)}
 				{!editing && (
 					<>
-						<Title>
-							<Button
+						<div className={styles.Title}>
+							<button
+								className={formStyles.Button}
 								title="Edit schedule"
 								onClick={() => {
 									setEditing(true)
 								}}
 							>
 								<LockIcon />
-							</Button>
-							<Headline>
+							</button>
+							<h1 className={styles.Headline}>
 								{updatedName}: {updatedDay}
-							</Headline>
-							<TitleActions>
-								<Button
+							</h1>
+							<div className="actions">
+								<button
+									className={formStyles.Button}
 									title="Hide past sessions"
 									onClick={() => setHidePastSessions((h) => !h)}
 								>
 									{hidePastSessions && <EyeOffIcon />}
 									{!hidePastSessions && <EyeIcon />}
-								</Button>
-								<ThemeSwitcher
-									currentTheme={theme}
-									darkTheme={dark}
-									lightTheme={light}
-									onSwitch={updateTheme}
-								/>
-							</TitleActions>
-						</Title>
+								</button>
+								<ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
+							</div>
+						</div>
 						<Schedule
 							sessions={cfg.sessions}
 							eventTimezoneName={cfg.tz}
@@ -170,7 +169,7 @@ export const App = () => {
 						/>
 					</>
 				)}
-				<Info>
+				<div className={styles.Info}>
 					<p>
 						Click the <LockIcon /> icon to create your own schedule. When done,
 						click the <UnLockIcon /> and share the updated URL.
@@ -186,9 +185,9 @@ export const App = () => {
 						</a>{' '}
 						to embed it on any page.
 					</p>
-				</Info>
-			</Main>
+				</div>
+			</main>
 			<Footer />
-		</ThemeProvider>
+		</>
 	)
 }

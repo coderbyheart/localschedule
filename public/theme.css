@@ -1,0 +1,26 @@
+html[data-theme="dark"] {
+  --color-background: #000;
+  --color-text: #fff;
+  --color-delete: #ff5235;
+  --color-add: #0fa;
+  --color-addDisabled: #aaa;
+  --color-countdownWarning: #ff5e007a;
+  --color-borderColor: #7d7d7d;
+  --filter-calendar-picker-indicator: invert(1);
+}
+
+html[data-theme="light"] {
+  --color-background: #fffbf6;
+  --color-text: #000000cc;
+  --color-add: #22a00d;
+  --color-addDisabled: #aaa;
+  --color-delete: #dc2000;
+  --color-countdownWarning: #ff000052;
+  --color-borderColor: #a7a7a7;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: "DM Mono", monospace;
+}

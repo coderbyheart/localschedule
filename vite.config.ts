@@ -53,10 +53,7 @@ export default defineConfig({
 		port: 8080,
 	},
 	resolve: {
-		alias: [
-			{ find: 'app/', replacement: '/src/' },
-			{ find: 'style/', replacement: '/src/style/' },
-		],
+		alias: [{ find: 'app/', replacement: '/src/' }],
 	},
 	build: {
 		outDir: './build',
