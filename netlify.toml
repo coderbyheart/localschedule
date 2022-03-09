@@ -1,5 +1,5 @@
 [build]
-    publish = "dist"
+    publish = "build"
     command = '''
     export PUBLIC_VERSION=$COMMIT_REF
     npm run build;
