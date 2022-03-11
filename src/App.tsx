@@ -35,6 +35,7 @@ export const App = () => {
 			1700: 'Closing & Retro',
 			1730: 'Dinner Break',
 			1900: 'Evening Activities',
+			1946: `You can add links, too!|${import.meta.env.PUBLIC_HOMEPAGE}`,
 		},
 		hidePastSessions: false,
 	}
@@ -118,7 +119,9 @@ export const App = () => {
 							onAdd={(add) => {
 								updateSessions((sessions) => ({
 									...sessions,
-									[parseInt(`${add.hour}${add.minute}`, 10)]: add.name,
+									[parseInt(`${add.hour}${add.minute}`, 10)]: `${add.name}${
+										add.url === '' ? '' : `|${add.url.toString()}`
+									}`,
 								}))
 							}}
 							onDelete={(time) => {

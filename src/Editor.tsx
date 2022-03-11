@@ -1,5 +1,6 @@
 import { AddIcon, DeleteIcon } from 'app/FeatherIcons'
 import formStyles from 'app/Form.module.css'
+import { SessionName } from 'app/SessionName'
 import tableStyles from 'app/Table.module.css'
 import { formatEventTime, toEventTime } from 'app/time'
 import { useRef, useState } from 'react'
@@ -8,6 +9,7 @@ type AddSession = {
 	name: string
 	hour: string
 	minute: string
+	url: string
 }
 
 const toNumber = (n: string) => {
@@ -17,6 +19,9 @@ const toNumber = (n: string) => {
 		return null
 	}
 }
+
+const urlRegex =
+	/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/
 
 export const Editor = ({
 	conferenceDate,
@@ -34,11 +39,13 @@ export const Editor = ({
 		name: '',
 		hour: '19',
 		minute: '45',
+		url: '',
 	})
 	const inputRef = useRef<HTMLInputElement>(null)
 	const isInputValid = () => {
 		const hour = toNumber(add.hour)
 		const minute = toNumber(add.minute)
+		const urlIsValid = add.url !== '' ? urlRegex.test(add.url) : true
 		return (
 			add.name.length > 0 &&
 			hour !== null &&
@@ -46,7 +53,8 @@ export const Editor = ({
 			hour <= 23 &&
 			minute !== null &&
 			minute >= 0 &&
-			minute <= 59
+			minute <= 59 &&
+			urlIsValid
 		)
 	}
 
@@ -58,6 +66,7 @@ export const Editor = ({
 		updateAdd({
 			...add,
 			name: '',
+			url: '',
 		})
 		inputRef.current?.focus()
 	}
@@ -114,25 +123,58 @@ export const Editor = ({
 							/>
 						</td>
 						<td>
-							<input
-								className={formStyles.Input}
-								type="text"
-								value={add.name}
-								onKeyUp={({ key }) => {
-									if (key === 'Enter') {
-										if (isInputValid()) {
-											addAction(add)
-											onAdd(add)
+							<form className={formStyles.Form}>
+								<fieldset>
+									<label htmlFor="name">Session name</label>
+									<input
+										className={formStyles.TextInput}
+										type="text"
+										value={add.name}
+										id={'name'}
+										onKeyUp={({ key }) => {
+											if (key === 'Enter') {
+												if (isInputValid()) {
+													addAction(add)
+													onAdd(add)
+												}
+											}
+										}}
+										onChange={({ target: { value } }) =>
+											updateAdd({
+												...add,
+												name: value,
+											})
 										}
-									}
-								}}
-								onChange={({ target: { value } }) =>
-									updateAdd({
-										...add,
-										name: value,
-									})
-								}
-							/>
+										placeholder='e.g. "Intro Session"'
+									/>
+								</fieldset>
+								<fieldset>
+									<label htmlFor="url">
+										Optional: URL to use as a hyperlink.
+									</label>
+									<input
+										className={formStyles.TextInput}
+										type="url"
+										id="url"
+										value={add.url ?? ''}
+										onChange={({ target: { value } }) =>
+											updateAdd({
+												...add,
+												url: value,
+											})
+										}
+										onKeyUp={({ key }) => {
+											if (key === 'Enter') {
+												if (isInputValid()) {
+													addAction(add)
+													onAdd(add)
+												}
+											}
+										}}
+										placeholder='e.g. "https://example.com/"'
+									/>
+								</fieldset>
+							</form>
 						</td>
 					</tr>
 					{Object.entries(sessions).map(([time, name]) => (
@@ -150,7 +192,9 @@ export const Editor = ({
 							<td className={'time'}>
 								{formatEventTime(eventTime(time as unknown as number))}
 							</td>
-							<td>{name}</td>
+							<td>
+								<SessionName name={name} />
+							</td>
 						</tr>
 					))}
 				</tbody>

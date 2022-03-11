@@ -53,3 +53,7 @@
 .Table th small {
   opacity: 0.5;
 }
+
+.Table a {
+  color: var(--color-text);
+}

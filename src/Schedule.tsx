@@ -1,3 +1,4 @@
+import { SessionName } from 'app/SessionName'
 import tableStyles from 'app/Table.module.css'
 import {
 	formatEventTime,
@@ -116,7 +117,9 @@ export const Schedule = ({
 								conferenceDate={userTime(0)}
 								startTime={userTime(time as unknown as number)}
 							/>
-							<td>{name}</td>
+							<td>
+								<SessionName name={name} />
+							</td>
 						</tr>
 					))}
 			</tbody>
