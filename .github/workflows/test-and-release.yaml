@@ -39,6 +39,18 @@ jobs:
           PUBLIC_VERSION: ${{ github.sha }}
         run: npm run build
 
+      - name: Install playwright
+        run: npx playwright install
+
+      - name: Start server
+        run: npx node-static build > server.log 2>&1 &
+
+      - name: Wait for server to be up
+        run: until nc -w 10 127.0.0.1 8080; do sleep 1; done
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:

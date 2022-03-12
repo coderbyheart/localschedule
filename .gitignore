@@ -5,3 +5,6 @@
 node_modules/
 npm-debug.log
 build/
+test-results/
+playwright-report/
+e2e-tests-out

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "outDir": "../e2e-tests-out",
+    "esModuleInterop": true,
+    "baseUrl": "../src",
+    "strict": true
+  },
+  "include": ["../playwright.config.ts", "../e2e-tests"]
+}

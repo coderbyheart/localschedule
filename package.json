@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test": "jest --passWithNoTests",
+    "test:e2e": "npx tsc -p e2e-tests/tsconfig.json && npx playwright test -c e2e-tests-out",
     "postinstall": "check-node-version --package",
     "lint": "eslint --ext .js,.ts,.tsx src/*.{ts,tsx}"
   },
@@ -40,12 +41,14 @@
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.35",
     "@nordicsemiconductor/object-to-env": "4.1.0",
+    "@playwright/test": "^1.19.2",
     "@swc/jest": "0.2.20",
     "@testing-library/react": "12.1.4",
     "@types/feather-icons": "4.7.0",
     "@types/jest": "27.4.1",
     "@types/react": "17.0.40",
     "@types/react-dom": "17.0.13",
+    "@types/sinon": "10.0.11",
     "@vitejs/plugin-react": "1.2.0",
     "check-node-version": "4.2.1",
     "eslint-config-react-app": "7.0.0",
@@ -54,12 +57,15 @@
     "handlebars": "4.7.7",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.5.1",
+    "sinon": "13.0.1",
     "vite": "2.8.6"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
+    "src/**/*.{ts,tsx}": [
       "eslint --ext .js,.ts,.jsx,.tsx"
+    ],
+    "e2e-tests/**/*.{ts,tsx}": [
+      "eslint --ext .js,.ts,.jsx,.tsx --parser-options tsconfigRootDir:e2e-tests"
     ],
     "*.{md,json,yaml,yml,html}": [
       "prettier --write"
@@ -87,6 +93,10 @@
       "^.+\\.css$": "identity-obj-proxy",
       "^app/(.*)$": "<rootDir>/src/$1"
     },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/e2e-tests/"
+    ],
     "transform": {
       "^.+\\.(t|j)sx?$": [
         "@swc/jest",
