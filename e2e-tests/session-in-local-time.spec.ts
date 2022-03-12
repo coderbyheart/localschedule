@@ -1,26 +1,10 @@
-import { BrowserContext, chromium, expect, test } from '@playwright/test'
-import path from 'path'
-import sinon from 'sinon'
+import { BrowserContext, expect, test } from '@playwright/test'
+import { browserWithFixedTime } from './browserWithFixedTime.js'
 
 test.describe('Adding an item', () => {
 	let context: BrowserContext
 	test.beforeAll(async () => {
-		const browser = await chromium.launch() // Or 'firefox' or 'webkit'.
-		context = await browser.newContext({
-			locale: 'no-NO',
-			timezoneId: 'Europe/Berlin',
-		})
-		// See https://github.com/microsoft/playwright/issues/6347#issuecomment-965887758
-		await context.addInitScript({
-			path: path.join(process.cwd(), 'node_modules/sinon/pkg/sinon.js'),
-		})
-		// Auto-enable sinon right away
-		// and enforce our "current" date
-		await context.addInitScript(() => {
-			const clock = sinon.useFakeTimers()
-			clock.setSystemTime(new Date('2022-03-11T12:00:00Z'))
-			;(window as any).__clock = clock
-		})
+		context = await browserWithFixedTime()
 	})
 
 	test('should allow me to add todo items', async () => {

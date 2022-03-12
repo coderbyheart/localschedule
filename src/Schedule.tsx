@@ -15,9 +15,9 @@ const diff = (startTime: Date, conferenceDate: Date) => {
 		// If difference is > 1 day
 		// show distance in days to conference start, so all entries have the same difference
 		const daysDistance = differenceInCalendarDays(conferenceDate, now)
-		return daysDistance > 1 ? `about ${daysDistance} days` : 'about 1 day'
+		return daysDistance > 1 ? `${daysDistance} days` : '1 day'
 	}
-	return formatDistance(startTime, now)
+	return formatDistance(startTime, now).replace('about ', '')
 }
 
 const startsInMinutes = (startTime: Date) => {
@@ -78,6 +78,16 @@ export const Schedule = ({
 	const eventTime = toEventTime({ conferenceDate, userTimeZone })
 	const userTime = toUserTime({ conferenceDate, eventTimezoneName })
 	const userFormat = formatUserTime({ userTimeZone })
+	const [currentTime, setCurrentTime] = useState<Date>(new Date())
+
+	useEffect(() => {
+		const i = setInterval(() => {
+			setCurrentTime(new Date())
+		}, 60 * 1000)
+		return () => {
+			clearInterval(i)
+		}
+	}, [])
 
 	return (
 		<table className={tableStyles.Table}>
@@ -91,7 +101,9 @@ export const Schedule = ({
 					<th>
 						Your Time
 						<br />
-						<small>{formatTimezone(userTimeZone)}</small>
+						<small>
+							{formatTimezone(userTimeZone)} ({userFormat(currentTime)})
+						</small>
 					</th>
 					<th>Starts in</th>
 					<th>Session</th>
@@ -104,24 +116,44 @@ export const Schedule = ({
 							!hidePastSessions ||
 							startsInMinutes(userTime(time as unknown as number)) > 0,
 					)
-					.map(([time, name]) => (
-						<tr key={time}>
-							<td className={'time'}>
-								{formatEventTime(eventTime(time as unknown as number))}
-							</td>
-							<td className={'time'}>
-								{userFormat(userTime(time as unknown as number))}
-							</td>
-							<Countdown
-								key={conferenceDate}
-								conferenceDate={userTime(0)}
-								startTime={userTime(time as unknown as number)}
-							/>
-							<td>
-								<SessionName name={name} />
-							</td>
-						</tr>
-					))}
+					.map(([time, name], i, sessions) => {
+						const nextIsOngoing =
+							sessions[i + 1] !== undefined
+								? startsInMinutes(
+										userTime(sessions[i + 1][0] as unknown as number),
+								  ) < 0
+								: false
+
+						const isOngoing =
+							startsInMinutes(userTime(time as unknown as number)) < 0 &&
+							!nextIsOngoing
+
+						return (
+							<tr key={time} className={isOngoing ? 'ongoing' : ''}>
+								<td className={'time'}>
+									{formatEventTime(eventTime(time as unknown as number))}
+								</td>
+								<td className={'time'}>
+									{userFormat(userTime(time as unknown as number))}
+								</td>
+								{isOngoing && (
+									<td>
+										<em>ongoing</em>
+									</td>
+								)}
+								{!isOngoing && (
+									<Countdown
+										key={conferenceDate}
+										conferenceDate={userTime(0)}
+										startTime={userTime(time as unknown as number)}
+									/>
+								)}
+								<td>
+									<SessionName name={name} />
+								</td>
+							</tr>
+						)
+					})}
 			</tbody>
 		</table>
 	)

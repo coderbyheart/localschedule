@@ -7,6 +7,7 @@ html[data-theme="dark"] {
   --color-countdownWarning: #ff5e007a;
   --color-borderColor: #7d7d7d;
   --filter-calendar-picker-indicator: invert(1);
+  --color-ongoing: #007500;
 }
 
 html[data-theme="light"] {
@@ -17,6 +18,7 @@ html[data-theme="light"] {
   --color-delete: #dc2000;
   --color-countdownWarning: #ff000052;
   --color-borderColor: #a7a7a7;
+  --color-ongoing: #7cff7c;
 }
 
 body {

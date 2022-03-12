@@ -57,3 +57,7 @@
 .Table a {
   color: var(--color-text);
 }
+
+.Table tr:global(.ongoing) {
+  background-color: var(--color-ongoing);
+}
