@@ -20,6 +20,16 @@ conferences!
 
     npm start
 
+### Run the tests
+
+Unit tests can be run using
+
+    npm test
+
+End-to-end tests can be run using
+
+    npm run test-e2e
+
 ## Architecture decision records (ADRs)
 
 see [./adr](./adr).

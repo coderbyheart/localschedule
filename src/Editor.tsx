@@ -107,6 +107,7 @@ export const Editor = ({
 										hour: value,
 									})
 								}}
+								name="session-hour"
 							/>
 							{':'}
 							<input
@@ -120,6 +121,7 @@ export const Editor = ({
 										minute: value,
 									})
 								}}
+								name="session-minute"
 							/>
 						</td>
 						<td>
@@ -146,6 +148,7 @@ export const Editor = ({
 											})
 										}
 										placeholder='e.g. "Intro Session"'
+										name="session-name"
 									/>
 								</fieldset>
 								<fieldset>

@@ -100,6 +100,7 @@ export const App = () => {
 							<button
 								className={formStyles.Button}
 								title="Save changes"
+								name="save-schedule"
 								onClick={() => {
 									const cfg = {
 										name: updatedName,
@@ -123,11 +124,13 @@ export const App = () => {
 									type="text"
 									value={updatedName}
 									onChange={({ target: { value } }) => updateName(value)}
+									name="conference-name"
 								/>
 								<DaySelector day={updatedDay} onUpdate={updateDay} />
 								<TimeZoneSelector
 									value={updatedTimeZone}
 									onChange={({ target: { value } }) => updateTimeZone(value)}
+									name="conference-timezone"
 								/>
 							</div>
 							<ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
@@ -163,6 +166,7 @@ export const App = () => {
 								onClick={() => {
 									setEditing(true)
 								}}
+								name="edit-schedule"
 							>
 								<LockIcon />
 							</button>

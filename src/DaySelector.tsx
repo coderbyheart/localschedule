@@ -15,6 +15,7 @@ export const DaySelector = ({
 			type="date"
 			value={value}
 			aria-label="date-input"
+			name="conference-day"
 			onChange={({ target: { value } }) => {
 				setValue(value)
 				try {
