@@ -1,12 +1,19 @@
 import styles from 'app/App.module.css'
 import { DaySelector } from 'app/DaySelector'
 import { Editor } from 'app/Editor'
-import { EyeIcon, EyeOffIcon, LockIcon, UnLockIcon } from 'app/FeatherIcons'
+import {
+	CalendarIcon,
+	EyeIcon,
+	EyeOffIcon,
+	LockIcon,
+	UnLockIcon,
+} from 'app/FeatherIcons'
 import { Footer } from 'app/Footer'
 import formStyles from 'app/Form.module.css'
-import { Schedule } from 'app/Schedule'
+import { Schedule as ScheduleComponent } from 'app/Schedule'
 import { Theme, ThemeSwitcher } from 'app/ThemeSwitcher'
 import { TimeZoneSelector } from 'app/timezones'
+import { useIcalExport } from 'app/useIcalExport'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 
@@ -16,8 +23,16 @@ if (typeof window.matchMedia === 'function') {
 	defaultTheme = match.matches ? Theme.dark : Theme.light
 }
 
+export type Schedule = {
+	name: string
+	day: string
+	tz: string
+	sessions: Record<number, string>
+	hidePastSessions: boolean
+}
+
 export const App = () => {
-	let cfg = {
+	let cfg: Schedule = {
 		name: 'ExampleConf',
 		day: format(new Date(), 'yyyy-MM-dd'),
 		tz: 'Europe/Oslo',
@@ -69,6 +84,8 @@ export const App = () => {
 	const [hidePastSessions, setHidePastSessions] = useState(
 		hidePastSessionsDefault,
 	)
+
+	const downloadIcal = useIcalExport(cfg)
 
 	useEffect(() => {
 		document.documentElement.setAttribute('data-theme', theme)
@@ -155,6 +172,15 @@ export const App = () => {
 							<div className="actions">
 								<button
 									className={formStyles.Button}
+									title="Export as calendar (.ics)"
+									onClick={() => {
+										downloadIcal()
+									}}
+								>
+									<CalendarIcon />
+								</button>
+								<button
+									className={formStyles.Button}
 									title="Hide past sessions"
 									onClick={() => setHidePastSessions((h) => !h)}
 								>
@@ -164,7 +190,7 @@ export const App = () => {
 								<ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
 							</div>
 						</div>
-						<Schedule
+						<ScheduleComponent
 							sessions={cfg.sessions}
 							eventTimezoneName={cfg.tz}
 							conferenceDate={cfg.day}
