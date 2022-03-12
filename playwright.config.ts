@@ -11,8 +11,9 @@ const config: PlaywrightTestConfig = {
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	use: {
-		actionTimeout: 250,
 		trace: 'on-first-retry',
+		video: 'on-first-retry',
+		screenshot: 'only-on-failure',
 	},
 	projects: [
 		{
