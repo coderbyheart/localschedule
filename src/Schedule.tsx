@@ -111,12 +111,9 @@ export const Schedule = ({
 			</thead>
 			<tbody>
 				{Object.entries(sessions)
-					.filter(
-						([time]) =>
-							!hidePastSessions ||
-							startsInMinutes(userTime(time as unknown as number)) > 0,
-					)
-					.map(([time, name], i, sessions) => {
+					.map((session, i, sessions) => {
+						const time = session[0] as unknown as number
+
 						const nextIsOngoing =
 							sessions[i + 1] !== undefined
 								? startsInMinutes(
@@ -125,9 +122,12 @@ export const Schedule = ({
 								: false
 
 						const isOngoing =
-							startsInMinutes(userTime(time as unknown as number)) < 0 &&
-							!nextIsOngoing
-
+							startsInMinutes(userTime(time)) < 0 && !nextIsOngoing
+						const isPast = startsInMinutes(userTime(time)) < 0 && !isOngoing
+						return { session, isPast, isOngoing }
+					})
+					.filter(({ isPast }) => (hidePastSessions ? !isPast : true))
+					.map(({ session: [time, name], isOngoing }) => {
 						return (
 							<tr key={time} className={isOngoing ? 'ongoing' : ''}>
 								<td className={'time'}>
