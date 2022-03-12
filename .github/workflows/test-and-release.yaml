@@ -54,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: ${GITHUB_REPOSITORY}-${{ github.sha }}
+          name: ${{ env.GITHUB_REPOSITORY }}-${{ github.sha }}
           path: build
 
       - name: Semantic release
