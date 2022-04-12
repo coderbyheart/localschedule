@@ -51,7 +51,7 @@
     "@types/sinon": "10.0.11",
     "@vitejs/plugin-react": "1.3.0",
     "check-node-version": "4.2.1",
-    "eslint-config-react-app": "7.0.0",
+    "eslint-config-react-app": "7.0.1",
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-no-restricted-imports": "0.0.0",
     "handlebars": "4.7.7",
