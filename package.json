@@ -57,7 +57,7 @@
     "handlebars": "4.7.7",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.5.1",
-    "sinon": "13.0.1",
+    "sinon": "13.0.2",
     "vite": "2.9.4"
   },
   "lint-staged": {
