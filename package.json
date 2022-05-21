@@ -41,7 +41,7 @@
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.70",
     "@nordicsemiconductor/object-to-env": "4.1.1",
-    "@playwright/test": "^1.22.1",
+    "@playwright/test": "^1.22.2",
     "@swc/jest": "0.2.21",
     "@testing-library/react": "12.1.5",
     "@types/feather-icons": "4.7.0",
