@@ -30,15 +30,49 @@ export const useIcalExport = (schedule: Schedule) => {
 			eventTimezoneName: schedule.tz,
 		})
 		const { error, value } = createEvents(
-			Object.entries(schedule.sessions).map(
-				([timeWithTrack, name], i, sessions) => {
+			Object.entries(schedule.sessions)
+				.sort(
+					([timeWithTrackA], [timeWithTrackB]) =>
+						parseInt(timeWithTrackA.split('@')[0]) -
+						parseInt(timeWithTrackB.split('@')[0]),
+				)
+				.map(([timeWithTrack, name], i, sessions) => {
 					const { sessionName, url } = formatSessionName(name)
 					const urlText = url === undefined ? undefined : url.toString()
 
 					const [time, track] = timeWithTrack.split('@')
 					const startTime = utcTime(parseInt(time, 10))
 
-					const next = sessions[i + 1]
+					// Find next entry for end time
+					let next: [string, string] | undefined = undefined
+					let nextStartTime: Date | undefined = undefined
+
+					if (track === undefined) {
+						// This session has no track. Find next entry in all tracks. This entry is probably a Lunch break that is valid for all tracks.
+						let j = i
+						while (
+							j < sessions.length - 1 &&
+							(nextStartTime?.getTime() ?? 0) <= startTime.getTime()
+						) {
+							next = sessions[++j]
+							const [nextStartTimeString] = next[0].split('@')
+							nextStartTime = utcTime(parseInt(nextStartTimeString, 10))
+						}
+					} else {
+						let nextTrack: string | undefined = undefined
+						// This session a track. Find next entry in the same track OR a without a track (e.g. a lunch break)
+						let j = i
+						while (
+							j < sessions.length - 1 &&
+							(nextStartTime?.getTime() ?? 0) <= startTime.getTime() &&
+							(nextTrack !== track || nextTrack === undefined)
+						) {
+							next = sessions[++j]
+							const [nextStartTimeString, nextTrackString] = next[0].split('@')
+							nextTrack = nextTrackString
+							nextStartTime = utcTime(parseInt(nextStartTimeString, 10))
+						}
+					}
 
 					const description = [
 						schedule.name,
@@ -88,8 +122,7 @@ export const useIcalExport = (schedule: Schedule) => {
 							location: track,
 						}
 					}
-				},
-			),
+				}),
 		)
 
 		if (value !== undefined) {
@@ -108,6 +141,7 @@ export const useIcalExport = (schedule: Schedule) => {
 			}, 0)
 		}
 
-		if (error !== undefined) console.error(`[iCalExport]`, error)
+		if (error !== undefined && error !== null)
+			console.error(`[iCalExport]`, error)
 	}
 }
