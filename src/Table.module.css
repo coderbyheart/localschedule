@@ -47,6 +47,10 @@
   width: 10%;
   white-space: nowrap;
 }
+.Table td:global(.time) legend {
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
 .Table td:global(.hot) {
   background-color: var(--color-countdownWarning);
 }

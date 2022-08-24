@@ -23,11 +23,13 @@ if (typeof window.matchMedia === 'function') {
 	defaultTheme = match.matches ? Theme.dark : Theme.light
 }
 
+export type Sessions = Record<string, string>
+
 export type Schedule = {
 	name: string
 	day: string
 	tz: string
-	sessions: Record<number, string>
+	sessions: Sessions
 	hidePastSessions: boolean
 }
 
@@ -46,6 +48,7 @@ export const App = () => {
 			1430: 'Session 3',
 			1530: 'Coffee Break',
 			1545: 'Session 4',
+			'1545@Main hall': `You can have sessions at the same time, too!`,
 			1645: 'Coffee Break',
 			1700: 'Closing & Retro',
 			1730: 'Dinner Break',
@@ -137,17 +140,21 @@ export const App = () => {
 						</div>
 						<Editor
 							onAdd={(add) => {
-								updateSessions((sessions) => ({
-									...sessions,
-									[parseInt(`${add.hour}${add.minute}`, 10)]: `${add.name}${
-										add.url === '' ? '' : `|${add.url.toString()}`
-									}`,
-								}))
+								updateSessions((sessions) => {
+									let time = parseInt(`${add.hour}${add.minute}`, 10).toString()
+									if (add.track.length > 0) time = `${time}@${add.track}`
+									return {
+										...sessions,
+										[time]: `${add.name}${
+											add.url === '' ? '' : `|${add.url.toString()}`
+										}`,
+									}
+								})
 							}}
 							onDelete={(time) => {
 								updateSessions((sessions) => {
 									const s = { ...sessions }
-									delete (s as { [key: number]: string })[time]
+									delete (s as { [key: string]: string })[time]
 									return s
 								})
 							}}

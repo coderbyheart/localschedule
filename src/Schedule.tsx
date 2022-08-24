@@ -105,14 +105,21 @@ export const Schedule = ({
 							{formatTimezone(userTimeZone)} ({userFormat(currentTime)})
 						</small>
 					</th>
+					<th>Track/Room</th>
 					<th>Starts in</th>
 					<th>Session</th>
 				</tr>
 			</thead>
 			<tbody>
 				{Object.entries(sessions)
+					.sort(
+						([timeWithTrackA], [timeWithTrackB]) =>
+							parseInt(timeWithTrackA.split('@')[0]) -
+							parseInt(timeWithTrackB.split('@')[0]),
+					)
 					.map((session, i, sessions) => {
-						const time = session[0] as unknown as number
+						const timeWithTrack = session[0]
+						const time = parseInt(timeWithTrack.split('@')[0])
 
 						const nextIsOngoing =
 							sessions[i + 1] !== undefined
@@ -127,15 +134,17 @@ export const Schedule = ({
 						return { session, isPast, isOngoing }
 					})
 					.filter(({ isPast }) => (hidePastSessions ? !isPast : true))
-					.map(({ session: [time, name], isOngoing }) => {
+					.map(({ session: [timeWithTrack, name], isOngoing }) => {
+						const [time, track] = timeWithTrack.split('@')
 						return (
-							<tr key={time} className={isOngoing ? 'ongoing' : ''}>
+							<tr key={timeWithTrack} className={isOngoing ? 'ongoing' : ''}>
 								<td className={'time'}>
 									{formatEventTime(eventTime(time as unknown as number))}
 								</td>
 								<td className={'time'}>
 									{userFormat(userTime(time as unknown as number))}
 								</td>
+								<td>{track ?? '—'}</td>
 								{isOngoing && (
 									<td>
 										<em>ongoing</em>

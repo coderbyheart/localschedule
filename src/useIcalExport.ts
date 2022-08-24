@@ -30,60 +30,66 @@ export const useIcalExport = (schedule: Schedule) => {
 			eventTimezoneName: schedule.tz,
 		})
 		const { error, value } = createEvents(
-			Object.entries(schedule.sessions).map(([time, name], i, sessions) => {
-				const { sessionName, url } = formatSessionName(name)
-				const urlText = url === undefined ? undefined : url.toString()
+			Object.entries(schedule.sessions).map(
+				([timeWithTrack, name], i, sessions) => {
+					const { sessionName, url } = formatSessionName(name)
+					const urlText = url === undefined ? undefined : url.toString()
 
-				const startTime = utcTime(parseInt(time, 10))
+					const [time, track] = timeWithTrack.split('@')
+					const startTime = utcTime(parseInt(time, 10))
 
-				const next = sessions[i + 1]
+					const next = sessions[i + 1]
 
-				const description = [
-					schedule.name,
-					`Session: ${sessionName}`,
-					urlText,
-				].join('\n')
+					const description = [
+						schedule.name,
+						`Session: ${sessionName}`,
+						urlText,
+					].join('\n')
 
-				if (next !== undefined) {
-					const endTime = utcTime(parseInt(next[0], 10))
-					return {
-						title: `${schedule.name}: ${sessionName}`,
-						start: [
-							startTime.getUTCFullYear(),
-							startTime.getUTCMonth() + 1,
-							startTime.getUTCDate(),
-							startTime.getUTCHours(),
-							startTime.getUTCMinutes(),
-						],
-						startInputType: 'utc',
-						end: [
-							endTime.getUTCFullYear(),
-							endTime.getUTCMonth() + 1,
-							endTime.getUTCDate(),
-							endTime.getUTCHours(),
-							endTime.getUTCMinutes(),
-						],
-						endInputType: 'utc',
-						url: urlText,
-						description,
+					if (next !== undefined) {
+						const [endTimeString] = next[0].split('@')
+						const endTime = utcTime(parseInt(endTimeString, 10))
+						return {
+							title: `${schedule.name}: ${sessionName}`,
+							start: [
+								startTime.getUTCFullYear(),
+								startTime.getUTCMonth() + 1,
+								startTime.getUTCDate(),
+								startTime.getUTCHours(),
+								startTime.getUTCMinutes(),
+							],
+							startInputType: 'utc',
+							end: [
+								endTime.getUTCFullYear(),
+								endTime.getUTCMonth() + 1,
+								endTime.getUTCDate(),
+								endTime.getUTCHours(),
+								endTime.getUTCMinutes(),
+							],
+							endInputType: 'utc',
+							url: urlText,
+							description,
+							location: track,
+						}
+					} else {
+						return {
+							title: `${schedule.name}: ${sessionName}`,
+							start: [
+								startTime.getUTCFullYear(),
+								startTime.getUTCMonth() + 1,
+								startTime.getUTCDate(),
+								startTime.getUTCHours(),
+								startTime.getUTCMinutes(),
+							],
+							startInputType: 'utc',
+							duration: { minutes: 60 },
+							url: urlText,
+							description,
+							location: track,
+						}
 					}
-				} else {
-					return {
-						title: `${schedule.name}: ${sessionName}`,
-						start: [
-							startTime.getUTCFullYear(),
-							startTime.getUTCMonth() + 1,
-							startTime.getUTCDate(),
-							startTime.getUTCHours(),
-							startTime.getUTCMinutes(),
-						],
-						startInputType: 'utc',
-						duration: { minutes: 60 },
-						url: urlText,
-						description,
-					}
-				}
-			}),
+				},
+			),
 		)
 
 		if (value !== undefined) {
