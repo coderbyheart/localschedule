@@ -28,10 +28,12 @@ const Countdown = ({
 	startTime,
 	warnTime,
 	conferenceDate,
+	track,
 }: {
 	startTime: Date
 	conferenceDate: Date
 	warnTime?: number
+	track?: string
 }) => {
 	const [timeToStart, setTimeToStart] = useState({
 		text: diff(startTime, conferenceDate),
@@ -57,6 +59,14 @@ const Countdown = ({
 		>
 			{timeToStart.minutes >= 0 && timeToStart.text}
 			{timeToStart.minutes < 0 && '-'}
+			{track !== undefined ? (
+				<small>
+					<br />
+					{track}
+				</small>
+			) : (
+				''
+			)}
 		</td>
 	)
 }
@@ -105,8 +115,11 @@ export const Schedule = ({
 							{formatTimezone(userTimeZone)} ({userFormat(currentTime)})
 						</small>
 					</th>
-					<th>Track/Room</th>
-					<th>Starts in</th>
+					<th>
+						Starts in
+						<br />
+						<small>Track/Room</small>
+					</th>
 					<th>Session</th>
 				</tr>
 			</thead>
@@ -144,10 +157,17 @@ export const Schedule = ({
 								<td className={'time'}>
 									{userFormat(userTime(time as unknown as number))}
 								</td>
-								<td>{track ?? '—'}</td>
 								{isOngoing && (
 									<td>
 										<em>ongoing</em>
+										{track !== undefined ? (
+											<small>
+												<br />
+												{track}
+											</small>
+										) : (
+											''
+										)}
 									</td>
 								)}
 								{!isOngoing && (
@@ -155,6 +175,7 @@ export const Schedule = ({
 										key={conferenceDate}
 										conferenceDate={userTime(0)}
 										startTime={userTime(time as unknown as number)}
+										track={track}
 									/>
 								)}
 								<td>

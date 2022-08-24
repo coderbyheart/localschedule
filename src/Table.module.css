@@ -55,9 +55,13 @@
   background-color: var(--color-countdownWarning);
 }
 .Table th small {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
+.Table td small {
+  opacity: 0.6;
+  font-weight: bold;
+}
 .Table a {
   color: var(--color-text);
 }
