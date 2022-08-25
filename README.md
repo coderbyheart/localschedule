@@ -28,7 +28,11 @@ Unit tests can be run using
 
 End-to-end tests can be run using
 
-    npm run test-e2e
+    npm run test:e2e
+
+You can see the browser by running
+
+    PWDEBUG=1 npm run test:e2e
 
 ## Architecture decision records (ADRs)
 
