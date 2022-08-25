@@ -132,10 +132,21 @@ export const Schedule = ({
 					)
 					.map((session, i, sessions) => {
 						const timeWithTrack = session[0]
-						const time = parseInt(timeWithTrack.split('@')[0])
+						const time = parseInt(timeWithTrack.split('@')[0], 10)
+
+						const nextSession = sessions.find(
+							([nextSessionTimeWithTrack], k) => {
+								if (k <= 1) return false
+								const nextSessionTime = parseInt(
+									nextSessionTimeWithTrack.split('@')[0],
+									10,
+								)
+								if (nextSessionTime <= time) return false
+							},
+						)
 
 						const nextIsOngoing =
-							sessions[i + 1] !== undefined
+							nextSession !== undefined
 								? startsInMinutes(
 										userTime(sessions[i + 1][0] as unknown as number),
 								  ) < 0
