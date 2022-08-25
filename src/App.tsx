@@ -25,16 +25,6 @@ if (typeof window.matchMedia === 'function') {
 	defaultTheme = match.matches ? Theme.dark : Theme.light
 }
 
-export type Sessions = Record<string, string>
-
-export type Schedule = {
-	name: string
-	day: string
-	tz: string
-	sessions: Sessions
-	hidePastSessions: boolean
-}
-
 export const App = () => {
 	let cfg: Schedule = {
 		name: 'ExampleConf',

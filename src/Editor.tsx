@@ -1,4 +1,3 @@
-import type { Sessions } from 'app/App'
 import { AddIcon, DeleteIcon } from 'app/FeatherIcons'
 import formStyles from 'app/Form.module.css'
 import { SessionName } from 'app/SessionName'
