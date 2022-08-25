@@ -5,7 +5,9 @@ import {
 	CalendarIcon,
 	EyeIcon,
 	EyeOffIcon,
+	GithubIcon,
 	LockIcon,
+	StarIcon,
 	UnLockIcon,
 } from 'app/FeatherIcons'
 import { Footer } from 'app/Footer'
@@ -181,6 +183,15 @@ export const App = () => {
 								{updatedName}: {updatedDay}
 							</h1>
 							<div className="actions">
+								<a
+									className={formStyles.Button}
+									href={import.meta.env.PUBLIC_HOMEPAGE}
+									rel="noopener noreferrer"
+									target="_blank"
+									title={'Contribute to this project on GitHub'}
+								>
+									<GithubIcon />
+								</a>
 								<button
 									className={formStyles.Button}
 									title="Export as calendar (.ics)"
@@ -217,13 +228,24 @@ export const App = () => {
 					<h2>Tips</h2>
 					<p>
 						Schedules change! Share the URL to your <em>localschedule</em> using{' '}
-						<a href="https://short.io/" rel="noreferrer noopener">
+						<a
+							href="https://short.io/"
+							rel="noreferrer noopener"
+							target="_blank"
+						>
 							short.io
 						</a>{' '}
 						which allows edits to the URL it redirects to.
 					</p>
 					<p>
-						<a href="https://www.notion.so/">Notion</a> user? Use{' '}
+						<a
+							href="https://www.notion.so/"
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							Notion
+						</a>{' '}
+						user? Use{' '}
 						<a
 							href={`${
 								new URL(document.location.href).origin
@@ -232,6 +254,30 @@ export const App = () => {
 							this URL
 						</a>{' '}
 						to embed it on any page.
+					</p>
+					<h2>
+						Like <em>localschedule</em>?
+					</h2>
+					<p>
+						Please{' '}
+						<a
+							href={import.meta.env.PUBLIC_HOMEPAGE}
+							rel="noopener noreferrer"
+							target="_blank"
+							title={'Contribute to this project on GitHub'}
+						>
+							<StarIcon />
+						</a>{' '}
+						it in on{' '}
+						<a
+							href={import.meta.env.PUBLIC_HOMEPAGE}
+							rel="noopener noreferrer"
+							target="_blank"
+							title={'Contribute to this project on GitHub'}
+						>
+							GitHub
+						</a>
+						!
 					</p>
 				</div>
 			</main>

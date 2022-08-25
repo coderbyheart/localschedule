@@ -367,3 +367,7 @@ export const GithubIcon = (options?: TypedIconOptions) => (
 export const CalendarIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} type="calendar" title="Export as calendar (.ics)" />
 )
+
+export const StarIcon = (options?: TypedIconOptions) => (
+	<FeatherIcon {...options} type="star" title="⭐" />
+)
