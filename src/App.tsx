@@ -214,6 +214,14 @@ export const App = () => {
 						Click the <LockIcon /> icon to create your own schedule. When done,
 						click the <UnLockIcon /> and share the updated URL.
 					</p>
+					<h2>Tips</h2>
+					<p>
+						Schedules change! Share the URL to your <em>localschedule</em> using{' '}
+						<a href="https://short.io/" rel="noreferrer noopener">
+							short.io
+						</a>{' '}
+						which allows edits to the URL it redirects to.
+					</p>
 					<p>
 						<a href="https://www.notion.so/">Notion</a> user? Use{' '}
 						<a
