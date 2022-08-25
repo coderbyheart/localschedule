@@ -1,8 +1,7 @@
-import { ongoingSessions } from 'app/ongoingSessions'
+import { ConfDateWithSessions, ongoingSessions } from 'app/ongoingSessions'
 import { format } from 'date-fns'
 
-const makeSchedule = (now: Date): Schedule => ({
-	name: 'ExampleConf',
+const makeSchedule = (now: Date): ConfDateWithSessions => ({
 	day: format(now, 'yyyy-MM-dd'),
 	tz: 'Europe/Oslo',
 	sessions: {
@@ -21,20 +20,19 @@ const makeSchedule = (now: Date): Schedule => ({
 		1730: 'Dinner Break',
 		1900: 'Evening Activities',
 	},
-	hidePastSessions: false,
 })
 
 describe('ongoingSessions()', () => {
 	it('should mark one ongoing session', () => {
 		const now = new Date('2022-03-11T13:00:00+01:00')
-		const cfg: Schedule = makeSchedule(now)
-		expect(ongoingSessions(cfg, now)).toEqual({ 1245: 'Lunch Break' })
+		expect(ongoingSessions(makeSchedule(now), now)).toEqual({
+			1245: 'Lunch Break',
+		})
 	})
 
 	it('should mark to parallel ongoing sessions', () => {
 		const now = new Date('2022-03-11T16:00:00+01:00')
-		const cfg: Schedule = makeSchedule(now)
-		expect(ongoingSessions(cfg, now)).toEqual({
+		expect(ongoingSessions(makeSchedule(now), now)).toEqual({
 			1545: 'Session 4',
 			'1545@Main hall': `You can have sessions at the same time, too!`,
 		})

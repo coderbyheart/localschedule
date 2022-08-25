@@ -1,6 +1,9 @@
 import { toUTCTime } from 'app/toUTCTime'
 
-const timeWithTrackToUTC = (timeWithTrack: string, schedule: Schedule): Date =>
+export type ConfDate = Pick<Schedule, 'day' | 'tz'>
+export type ConfDateWithSessions = Pick<Schedule, 'sessions'> & ConfDate
+
+const timeWithTrackToUTC = (timeWithTrack: string, schedule: ConfDate): Date =>
 	toUTCTime({
 		conferenceDate: schedule.day,
 		eventTimezoneName: schedule.tz,
@@ -9,14 +12,14 @@ const timeWithTrackToUTC = (timeWithTrack: string, schedule: Schedule): Date =>
 const isBeforeNow = (
 	[timeWithTrack]: [string, string],
 	now: Date,
-	schedule: Schedule,
+	schedule: ConfDate,
 ): boolean => {
 	const time = timeWithTrackToUTC(timeWithTrack, schedule)
 	return time.getTime() < now.getTime()
 }
 
 export const ongoingSessions = (
-	schedule: Schedule,
+	schedule: ConfDateWithSessions,
 	now = new Date(),
 ): Sessions => {
 	return (
