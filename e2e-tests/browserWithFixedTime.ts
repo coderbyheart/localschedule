@@ -2,7 +2,9 @@ import { BrowserContext, chromium } from '@playwright/test'
 import path from 'path'
 import sinon from 'sinon'
 
-export const browserWithFixedTime = async (): Promise<BrowserContext> => {
+export const browserWithFixedTime = async (
+	time?: Date,
+): Promise<BrowserContext> => {
 	const browser = await chromium.launch()
 	const context = await browser.newContext({
 		locale: 'no-NO',
@@ -16,7 +18,7 @@ export const browserWithFixedTime = async (): Promise<BrowserContext> => {
 	// and enforce our "current" date
 	await context.addInitScript(() => {
 		const clock = sinon.useFakeTimers()
-		clock.setSystemTime(new Date('2022-03-11T12:00:00Z'))
+		clock.setSystemTime(time ?? new Date('2022-03-11T12:00:00Z'))
 		;(window as any).__clock = clock
 	})
 

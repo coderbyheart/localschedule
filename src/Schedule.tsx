@@ -136,20 +136,25 @@ export const Schedule = ({
 
 						const nextSession = sessions.find(
 							([nextSessionTimeWithTrack], k) => {
-								if (k <= 1) return false
+								if (k <= i) return false
 								const nextSessionTime = parseInt(
 									nextSessionTimeWithTrack.split('@')[0],
 									10,
 								)
 								if (nextSessionTime <= time) return false
+								return true
 							},
 						)
 
+						console.log(nextSession)
+
+						const nextSessionTime =
+							nextSession !== undefined &&
+							parseInt(nextSession[0].split('@')[0])
+
 						const nextIsOngoing =
-							nextSession !== undefined
-								? startsInMinutes(
-										userTime(sessions[i + 1][0] as unknown as number),
-								  ) < 0
+							nextSessionTime !== undefined
+								? startsInMinutes(userTime(nextSessionTime as number)) < 0
 								: false
 
 						const isOngoing =
