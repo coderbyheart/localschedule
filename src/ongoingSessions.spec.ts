@@ -37,4 +37,21 @@ describe('ongoingSessions()', () => {
 			'1545@Main hall': `You can have sessions at the same time, too!`,
 		})
 	})
+
+	it('should not highlight the last session on the next day', () => {
+		const now = new Date('2022-03-12T08:00:00+01:00')
+		expect(ongoingSessions(makeSchedule(now), now)).toEqual({})
+	})
+
+	it('should not mark the first session before begin', () => {
+		const now = new Date('2022-03-11T08:59:59.999+01:00')
+		expect(ongoingSessions(makeSchedule(now), now)).toEqual({})
+	})
+
+	it('should mark sessions exactly when they start', () => {
+		const now = new Date('2022-03-11T09:00:00+01:00')
+		expect(ongoingSessions(makeSchedule(now), now)).toEqual({
+			900: 'Arrival & Breakfast',
+		})
+	})
 })

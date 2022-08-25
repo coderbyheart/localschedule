@@ -32,7 +32,8 @@ export const ongoingSessions = (
 			// Filter out future sessions
 			.filter(
 				([timeWithTrack, session]) =>
-					timeWithTrackToUTC(timeWithTrack, schedule).getTime() < now.getTime(),
+					timeWithTrackToUTC(timeWithTrack, schedule).getTime() <=
+					now.getTime(),
 			)
 			// Check of next is ongoing
 			.filter(([timeWithTrack], i, sessions) => {
