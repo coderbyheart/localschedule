@@ -1,3 +1,4 @@
+import { ongoingSessions } from 'app/ongoingSessions'
 import { SessionName } from 'app/SessionName'
 import tableStyles from 'app/Table.module.css'
 import {
@@ -99,6 +100,12 @@ export const Schedule = ({
 		}
 	}, [])
 
+	const ongoing = ongoingSessions({
+		day: conferenceDate,
+		sessions,
+		tz: eventTimezoneName,
+	})
+
 	return (
 		<table className={tableStyles.Table}>
 			<thead>
@@ -130,19 +137,10 @@ export const Schedule = ({
 							parseInt(timeWithTrackA.split('@')[0]) -
 							parseInt(timeWithTrackB.split('@')[0]),
 					)
-					.map((session, i, sessions) => {
+					.map((session) => {
 						const timeWithTrack = session[0]
-						const time = parseInt(timeWithTrack.split('@')[0])
-
-						const nextIsOngoing =
-							sessions[i + 1] !== undefined
-								? startsInMinutes(
-										userTime(sessions[i + 1][0] as unknown as number),
-								  ) < 0
-								: false
-
-						const isOngoing =
-							startsInMinutes(userTime(time)) < 0 && !nextIsOngoing
+						const time = parseInt(timeWithTrack.split('@')[0], 10)
+						const isOngoing = ongoing[session[0]] !== undefined
 						const isPast = startsInMinutes(userTime(time)) < 0 && !isOngoing
 						return { session, isPast, isOngoing }
 					})

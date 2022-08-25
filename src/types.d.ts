@@ -28,3 +28,13 @@ interface ImportMeta {
 		PUBLIC_MANIFEST_BACKGROUND_COLOR: string
 	}
 }
+
+type Sessions = Record<string, string>
+
+type Schedule = {
+	name: string
+	day: string
+	tz: string
+	sessions: Sessions
+	hidePastSessions: boolean
+}
