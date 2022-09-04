@@ -43,7 +43,7 @@
     "@nordicsemiconductor/object-to-env": "4.1.1",
     "@playwright/test": "^1.25.1",
     "@swc/jest": "0.2.22",
-    "@testing-library/react": "13.3.0",
+    "@testing-library/react": "13.4.0",
     "@types/feather-icons": "4.7.0",
     "@types/jest": "28.1.8",
     "@types/react": "18.0.18",
