@@ -36,7 +36,7 @@
     "ics": "2.40.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.3.0"
+    "react-router-dom": "6.4.0"
   },
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.125",
