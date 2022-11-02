@@ -29,7 +29,7 @@
     "Conferences"
   ],
   "dependencies": {
-    "@nordicsemiconductor/from-env": "1.0.2",
+    "@nordicsemiconductor/from-env": "1.0.3",
     "ajv": "8.11.0",
     "date-fns-tz": "1.3.7",
     "feather-icons": "4.29.0",
