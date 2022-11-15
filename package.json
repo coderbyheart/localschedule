@@ -47,7 +47,7 @@
     "@types/feather-icons": "4.7.0",
     "@types/jest": "29.2.3",
     "@types/react": "18.0.25",
-    "@types/react-dom": "18.0.8",
+    "@types/react-dom": "18.0.9",
     "@types/sinon": "10.0.13",
     "@vitejs/plugin-react": "2.2.0",
     "check-node-version": "4.2.1",
