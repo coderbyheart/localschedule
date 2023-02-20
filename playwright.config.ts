@@ -23,6 +23,12 @@ const config: PlaywrightTestConfig = {
 			},
 		},
 	],
+	webServer: {
+		command: 'npm start',
+		url: 'http://localhost:8080/',
+		timeout: 10 * 1000,
+		reuseExistingServer: process.env.CI === undefined,
+	},
 }
 
 export default config
