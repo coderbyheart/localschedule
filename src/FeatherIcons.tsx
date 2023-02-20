@@ -1,5 +1,8 @@
 import styles from 'app/FeatherIcons.module.css'
-import { icons as featherIcons } from 'feather-icons'
+import {
+	FeatherIcon as FeatherIconType,
+	icons as featherIcons,
+} from 'feather-icons'
 
 type IconOptions = {
 	/** defaults to 1.5 */
@@ -16,7 +19,7 @@ const defaultIconSize = 24
 const defaultStrokeWidth = 2
 
 // Must be wrapped in an element: https://github.com/reactjs/rfcs/pull/129
-const wrapSvg = (options: IconOptions) => (f: typeof featherIcons[0]) =>
+const wrapSvg = (options: IconOptions) => (f: FeatherIconType) =>
 	(
 		<span
 			className={`${options.className ?? ''} ${
