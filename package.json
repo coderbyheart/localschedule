@@ -39,7 +39,7 @@
     "react-router-dom": "6.8.2"
   },
   "devDependencies": {
-    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.182",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.183",
     "@nordicsemiconductor/object-to-env": "4.1.2",
     "@playwright/test": "^1.31.1",
     "@swc/jest": "0.2.24",
