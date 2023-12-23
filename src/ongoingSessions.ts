@@ -31,7 +31,7 @@ export const ongoingSessions = (
 			)
 			// Filter out future sessions
 			.filter(
-				([timeWithTrack, session]) =>
+				([timeWithTrack]) =>
 					timeWithTrackToUTC(timeWithTrack, schedule).getTime() <=
 					now.getTime(),
 			)
