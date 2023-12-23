@@ -2,6 +2,7 @@ import { App } from 'app/App'
 import { log } from 'app/log'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import 'app/sentry.js'
 
 const l = (...args: any) => log('App', ...args)
 l('Version:', import.meta.env.PUBLIC_VERSION)

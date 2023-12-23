@@ -9,6 +9,8 @@ jobs:
   main:
     runs-on: ubuntu-latest
 
+    environment: production
+
     steps:
       - uses: actions/checkout@v4
 
@@ -37,6 +39,7 @@ jobs:
       - name: Build
         env:
           PUBLIC_VERSION: ${{ github.sha }}
+          PUBLIC_SENTRY_DSN: ${{ vars.SENTRY_DSN }}
         run: npm run build
 
       - name: Install playwright
