@@ -5,4 +5,4 @@
     npm run build;
     '''
 [build.environment]
-  NODE_VERSION = "16"
+  NODE_VERSION = "20"
