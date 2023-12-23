@@ -12,7 +12,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "importsNotUsedAsValues": "error",
     "baseUrl": "src",
     "paths": {
       "app/*": ["*"]
