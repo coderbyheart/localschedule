@@ -50,7 +50,7 @@
     "@testing-library/react": "14.1.2",
     "@types/feather-icons": "4.29.4",
     "@types/jest": "29.5.11",
-    "@types/react": "18.2.46",
+    "@types/react": "18.2.47",
     "@types/react-dom": "18.2.18",
     "@types/sinon": "17.0.2",
     "@typescript-eslint/eslint-plugin": "6.17.0",
