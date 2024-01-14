@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "18.4.4",
-    "@nordicsemiconductor/asset-tracker-cloud-code-style": "13.1.7",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "13.1.8",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
     "@nordicsemiconductor/object-to-env": "7.0.5",
     "@playwright/test": "1.40.1",
