@@ -45,7 +45,7 @@
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "13.1.12",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
     "@nordicsemiconductor/object-to-env": "7.0.6",
-    "@playwright/test": "1.41.1",
+    "@playwright/test": "1.41.2",
     "@swc/jest": "0.2.34",
     "@testing-library/react": "14.2.0",
     "@types/feather-icons": "4.29.4",
