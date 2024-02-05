@@ -46,7 +46,7 @@
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
     "@nordicsemiconductor/object-to-env": "7.0.6",
     "@playwright/test": "1.41.2",
-    "@swc/jest": "0.2.34",
+    "@swc/jest": "0.2.36",
     "@testing-library/react": "14.2.1",
     "@types/feather-icons": "4.29.4",
     "@types/jest": "29.5.12",
