@@ -44,7 +44,7 @@
     "@commitlint/config-conventional": "18.6.1",
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "13.1.12",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
-    "@nordicsemiconductor/object-to-env": "7.0.6",
+    "@nordicsemiconductor/object-to-env": "7.0.7",
     "@playwright/test": "1.41.2",
     "@swc/jest": "0.2.36",
     "@testing-library/react": "14.2.1",
