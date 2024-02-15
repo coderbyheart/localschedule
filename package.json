@@ -30,8 +30,8 @@
   ],
   "dependencies": {
     "@nordicsemiconductor/from-env": "3.0.0",
-    "@sentry/react": "7.101.0",
-    "@sentry/browser": "7.101.0",
+    "@sentry/react": "7.101.1",
+    "@sentry/browser": "7.101.1",
     "ajv": "8.12.0",
     "date-fns-tz": "2.0.0",
     "feather-icons": "4.29.1",
