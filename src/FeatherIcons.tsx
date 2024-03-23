@@ -19,27 +19,26 @@ const defaultIconSize = 24
 const defaultStrokeWidth = 2
 
 // Must be wrapped in an element: https://github.com/reactjs/rfcs/pull/129
-const wrapSvg = (options: IconOptions) => (f: FeatherIconType) =>
-	(
-		<span
-			className={`${options.className ?? ''} ${
-				styles.iconContainer
-			} feather-icon`}
-			style={{
-				height: `${options.size ?? defaultIconSize}px`,
+const wrapSvg = (options: IconOptions) => (f: FeatherIconType) => (
+	<span
+		className={`${options.className ?? ''} ${
+			styles.iconContainer
+		} feather-icon`}
+		style={{
+			height: `${options.size ?? defaultIconSize}px`,
+			width: `${options.size ?? defaultIconSize}px`,
+			color: `${options.color ?? 'inherit'}`,
+		}}
+		aria-label={options.title}
+		dangerouslySetInnerHTML={{
+			__html: f.toSvg({
+				'stroke-width': `${options.strokeWidth ?? defaultStrokeWidth}px`,
 				width: `${options.size ?? defaultIconSize}px`,
-				color: `${options.color ?? 'inherit'}`,
-			}}
-			aria-label={options.title}
-			dangerouslySetInnerHTML={{
-				__html: f.toSvg({
-					'stroke-width': `${options.strokeWidth ?? defaultStrokeWidth}px`,
-					width: `${options.size ?? defaultIconSize}px`,
-					height: `${options.size ?? defaultIconSize}px`,
-				}),
-			}}
-		/>
-	)
+				height: `${options.size ?? defaultIconSize}px`,
+			}),
+		}}
+	/>
+)
 
 type FeatherIconIdentifier =
 	| 'activity'

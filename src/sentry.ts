@@ -10,9 +10,10 @@ if (enableSentry) {
 		integrations: [new BrowserTracing()],
 		tracesSampleRate: 0.05,
 		beforeSend: (event) => {
-			if (event.contexts?.device?.name?.includes('HeadlessChrome') ?? false) return null
+			if (event.contexts?.device?.name?.includes('HeadlessChrome') ?? false)
+				return null
 			return event
-		}
+		},
 	})
 	Sentry.setContext('app', {
 		version: import.meta.env.PUBLIC_VERSION,
