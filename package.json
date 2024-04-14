@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@bifravst/prettier-config": "1.0.0",
-    "@commitlint/config-conventional": "19.1.0",
+    "@commitlint/config-conventional": "19.2.2",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
     "@nordicsemiconductor/object-to-env": "7.0.7",
     "@playwright/test": "1.43.1",
