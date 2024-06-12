@@ -35,7 +35,7 @@
     "ajv": "8.16.0",
     "date-fns-tz": "2.0.1",
     "feather-icons": "4.29.2",
-    "ics": "3.7.5",
+    "ics": "3.7.6",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "6.23.1"
