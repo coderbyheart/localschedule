@@ -38,7 +38,7 @@
     "ics": "3.7.6",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router-dom": "6.24.0"
+    "react-router-dom": "6.24.1"
   },
   "devDependencies": {
     "@bifravst/prettier-config": "1.0.3",
