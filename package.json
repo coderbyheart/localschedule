@@ -45,7 +45,7 @@
     "@commitlint/config-conventional": "19.2.2",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
     "@nordicsemiconductor/object-to-env": "7.0.7",
-    "@playwright/test": "1.45.1",
+    "@playwright/test": "1.45.2",
     "@swc/jest": "0.2.36",
     "@testing-library/react": "14.3.1",
     "@types/feather-icons": "4.29.4",
