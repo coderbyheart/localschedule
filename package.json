@@ -33,7 +33,7 @@
     "@sentry/browser": "7.119.0",
     "@sentry/react": "7.119.0",
     "ajv": "8.17.1",
-    "date-fns-tz": "2.0.1",
+    "date-fns-tz": "3.2.0",
     "feather-icons": "4.29.2",
     "ics": "3.8.1",
     "react": "18.3.1",
