@@ -55,7 +55,7 @@
     "@types/sinon": "17.0.3",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
-    "@vitejs/plugin-react": "4.3.2",
+    "@vitejs/plugin-react": "4.3.3",
     "check-node-version": "4.2.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",
