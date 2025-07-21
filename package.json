@@ -41,7 +41,7 @@
     "react-router-dom": "6.30.1"
   },
   "devDependencies": {
-    "@bifravst/prettier-config": "1.1.8",
+    "@bifravst/prettier-config": "1.1.11",
     "@commitlint/config-conventional": "19.8.1",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript": "17.0.0",
     "@nordicsemiconductor/object-to-env": "7.0.7",
