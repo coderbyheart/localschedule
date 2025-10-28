@@ -57,7 +57,7 @@
     "@typescript-eslint/parser": "7.18.0",
     "@vitejs/plugin-react": "4.5.2",
     "check-node-version": "4.2.1",
-    "eslint-config-prettier": "9.1.0",
+    "eslint-config-prettier": "9.1.2",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-no-restricted-imports": "0.0.0",
