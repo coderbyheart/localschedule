@@ -52,7 +52,7 @@
     "@types/jest": "29.5.14",
     "@types/react": "18.3.27",
     "@types/react-dom": "18.3.7",
-    "@types/sinon": "17.0.4",
+    "@types/sinon": "21.0.1",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "@vitejs/plugin-react": "4.7.0",
