@@ -36,8 +36,8 @@
     "date-fns-tz": "2.0.1",
     "feather-icons": "4.29.2",
     "ics": "3.8.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "react-router-dom": "6.30.2"
   },
   "devDependencies": {
@@ -50,8 +50,8 @@
     "@testing-library/react": "14.3.1",
     "@types/feather-icons": "4.29.4",
     "@types/jest": "29.5.14",
-    "@types/react": "18.3.27",
-    "@types/react-dom": "18.3.7",
+    "@types/react": "19.2.15",
+    "@types/react-dom": "19.2.3",
     "@types/sinon": "17.0.4",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
