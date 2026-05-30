@@ -1,8 +1,8 @@
-import { App } from 'app/App'
-import { log } from 'app/log'
+import { App } from './App.tsx'
+import { log } from './log.ts'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import 'app/sentry.js'
+import './sentry.ts'
 
 const l = (...args: any) => log('App', ...args)
 l('Version:', import.meta.env.PUBLIC_VERSION)

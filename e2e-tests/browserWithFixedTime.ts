@@ -14,10 +14,15 @@ export const browserWithFixedTime = async (
 		path: path.join(process.cwd(), 'node_modules/sinon/pkg/sinon.js'),
 	})
 	// Auto-enable sinon right away
-	// and enforce our "current" date
+	// and enforce our "current" date.
+	// Only fake `Date`: faking the timer functions (setTimeout,
+	// requestAnimationFrame, queueMicrotask, ...) stalls React's scheduler
+	// and leaves the app unrendered.
 	await context.addInitScript(`
-	const clock = sinon.useFakeTimers()
-		clock.setSystemTime(${(time ?? new Date('2022-03-11T12:00:00Z')).getTime()});
+		const clock = sinon.useFakeTimers({
+			now: ${(time ?? new Date('2022-03-11T12:00:00Z')).getTime()},
+			toFake: ['Date'],
+		})
 		window.__clock = clock
 		`)
 

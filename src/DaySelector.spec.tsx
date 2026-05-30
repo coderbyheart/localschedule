@@ -1,5 +1,6 @@
 import { fireEvent, render } from '@testing-library/react'
-import { DaySelector } from 'app/DaySelector'
+import { describe, expect, it } from 'vitest'
+import { DaySelector } from './DaySelector.tsx'
 
 describe('DaySelector', () => {
 	it('should update with a correct date', () => {

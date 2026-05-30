@@ -1,5 +1,5 @@
-import { DarkModeIcon, LightModeIcon } from 'app/FeatherIcons'
-import formStyles from 'app/Form.module.css'
+import { DarkModeIcon, LightModeIcon } from './FeatherIcons.tsx'
+import formStyles from './Form.module.css'
 
 export enum Theme {
 	light = 'light',

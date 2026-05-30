@@ -1,4 +1,4 @@
-import styles from 'app/TimeZoneSelector.module.css'
+import styles from './TimeZoneSelector.module.css'
 import type { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 
 export const timezones = [

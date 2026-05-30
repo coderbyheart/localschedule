@@ -1,6 +1,6 @@
-import styles from 'app/App.module.css'
-import { DaySelector } from 'app/DaySelector'
-import { Editor } from 'app/Editor'
+import styles from './App.module.css'
+import { DaySelector } from './DaySelector.tsx'
+import { Editor } from './Editor.tsx'
 import {
 	CalendarIcon,
 	EyeIcon,
@@ -9,15 +9,17 @@ import {
 	LockIcon,
 	StarIcon,
 	UnLockIcon,
-} from 'app/FeatherIcons'
-import { Footer } from 'app/Footer'
-import formStyles from 'app/Form.module.css'
-import { Schedule as ScheduleComponent } from 'app/Schedule'
-import { Theme, ThemeSwitcher } from 'app/ThemeSwitcher'
-import { TimeZoneSelector } from 'app/timezones'
-import { useIcalExport } from 'app/useIcalExport'
+} from './FeatherIcons.tsx'
+import { Footer } from './Footer.tsx'
+import formStyles from './Form.module.css'
+import { Schedule as ScheduleComponent } from './Schedule.tsx'
+import { Theme, ThemeSwitcher } from './ThemeSwitcher.tsx'
+import { TimeZoneSelector } from './timezones.tsx'
+import { useIcalExport } from './useIcalExport.ts'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
+
+const homepage = import.meta.env.PUBLIC_HOMEPAGE
 
 let defaultTheme = Theme.light
 if (typeof window.matchMedia === 'function') {
@@ -45,7 +47,7 @@ export const App = () => {
 			1700: 'Closing & Retro',
 			1730: 'Dinner Break',
 			1900: 'Evening Activities',
-			1946: `You can add links, too!|${import.meta.env.PUBLIC_HOMEPAGE}`,
+			1946: `You can add links, too!|${homepage}`,
 		},
 		hidePastSessions: false,
 	}
@@ -146,7 +148,7 @@ export const App = () => {
 							onDelete={(time) => {
 								updateSessions((sessions) => {
 									const s = { ...sessions }
-									delete (s as { [key: string]: string })[time]
+									delete s[time]
 									return s
 								})
 							}}
@@ -175,7 +177,7 @@ export const App = () => {
 							<div className="actions">
 								<a
 									className={formStyles.Button}
-									href={import.meta.env.PUBLIC_HOMEPAGE}
+									href={homepage}
 									rel="noopener noreferrer"
 									target="_blank"
 									title={'Contribute to this project on GitHub'}
@@ -251,7 +253,7 @@ export const App = () => {
 					<p>
 						Please{' '}
 						<a
-							href={import.meta.env.PUBLIC_HOMEPAGE}
+							href={homepage}
 							rel="noopener noreferrer"
 							target="_blank"
 							title={'Contribute to this project on GitHub'}
@@ -260,7 +262,7 @@ export const App = () => {
 						</a>{' '}
 						it in on{' '}
 						<a
-							href={import.meta.env.PUBLIC_HOMEPAGE}
+							href={homepage}
 							rel="noopener noreferrer"
 							target="_blank"
 							title={'Contribute to this project on GitHub'}

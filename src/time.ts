@@ -1,4 +1,4 @@
-import { zonedTimeToUtc, format } from 'date-fns-tz'
+import { fromZonedTime, format } from 'date-fns-tz'
 
 export const toUserTime =
 	({
@@ -11,7 +11,7 @@ export const toUserTime =
 	(time: number): Date => {
 		const minutes = time % 100
 		const hours = (time - minutes) / 100
-		return zonedTimeToUtc(
+		return fromZonedTime(
 			`${conferenceDate} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
 				2,
 				'0',
@@ -35,7 +35,7 @@ export const toEventTime =
 	(time: number): Date => {
 		const minutes = time % 100
 		const hours = (time - minutes) / 100
-		return zonedTimeToUtc(
+		return fromZonedTime(
 			`${conferenceDate} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
 				2,
 				'0',

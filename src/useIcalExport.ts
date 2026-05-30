@@ -1,5 +1,5 @@
-import { formatSessionName } from 'app/SessionName'
-import { toUTCTime } from 'app/toUTCTime'
+import { formatSessionName } from './SessionName.tsx'
+import { toUTCTime } from './toUTCTime.ts'
 import { createEvents } from 'ics'
 
 export const useIcalExport = (schedule: Schedule) => {
@@ -104,7 +104,7 @@ export const useIcalExport = (schedule: Schedule) => {
 				}),
 		)
 
-		if (value !== undefined) {
+		if (value !== undefined && value !== null) {
 			const file = new File([value], `${schedule.name}.ics`)
 			const link = document.createElement('a')
 			link.style.display = 'none'
