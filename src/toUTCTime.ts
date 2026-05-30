@@ -1,4 +1,4 @@
-import { zonedTimeToUtc } from 'date-fns-tz'
+import { fromZonedTime } from 'date-fns-tz'
 
 export const toUTCTime =
 	({
@@ -11,7 +11,7 @@ export const toUTCTime =
 	(time: number): Date => {
 		const minutes = time % 100
 		const hours = (time - minutes) / 100
-		return zonedTimeToUtc(
+		return fromZonedTime(
 			`${conferenceDate} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
 				2,
 				'0',

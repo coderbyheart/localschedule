@@ -1,8 +1,8 @@
-import { AddIcon, DeleteIcon } from 'app/FeatherIcons'
-import formStyles from 'app/Form.module.css'
-import { SessionName } from 'app/SessionName'
-import tableStyles from 'app/Table.module.css'
-import { formatEventTime, toEventTime } from 'app/time'
+import { AddIcon, DeleteIcon } from './FeatherIcons.tsx'
+import formStyles from './Form.module.css'
+import { SessionName } from './SessionName.tsx'
+import tableStyles from './Table.module.css'
+import { formatEventTime, toEventTime } from './time.ts'
 import { useRef, useState } from 'react'
 
 type AddSession = {

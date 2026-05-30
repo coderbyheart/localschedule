@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react'
-import { BrowserTracing } from '@sentry/browser'
 
 const enableSentry = import.meta.env.PUBLIC_SENTRY_DSN !== undefined
 
@@ -7,7 +6,7 @@ if (enableSentry) {
 	console.debug(`Sentry enabled.`)
 	Sentry.init({
 		dsn: import.meta.env.PUBLIC_SENTRY_DSN,
-		integrations: [new BrowserTracing()],
+		integrations: [Sentry.browserTracingIntegration()],
 		tracesSampleRate: 0.05,
 		beforeSend: (event) => {
 			if (event.contexts?.device?.name?.includes('HeadlessChrome') ?? false)

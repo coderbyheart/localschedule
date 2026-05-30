@@ -1,4 +1,6 @@
-import { ConfDateWithSessions, ongoingSessions } from 'app/ongoingSessions'
+import assert from 'node:assert/strict'
+import { describe, it } from 'node:test'
+import { type ConfDateWithSessions, ongoingSessions } from './ongoingSessions.ts'
 import { format } from 'date-fns'
 
 const makeSchedule = (now: Date): ConfDateWithSessions => ({
@@ -25,14 +27,14 @@ const makeSchedule = (now: Date): ConfDateWithSessions => ({
 describe('ongoingSessions()', () => {
 	it('should mark one ongoing session', () => {
 		const now = new Date('2022-03-11T13:00:00+01:00')
-		expect(ongoingSessions(makeSchedule(now), now)).toEqual({
+		assert.deepEqual(ongoingSessions(makeSchedule(now), now), {
 			1245: 'Lunch Break',
 		})
 	})
 
 	it('should mark to parallel ongoing sessions', () => {
 		const now = new Date('2022-03-11T16:00:00+01:00')
-		expect(ongoingSessions(makeSchedule(now), now)).toEqual({
+		assert.deepEqual(ongoingSessions(makeSchedule(now), now), {
 			1545: 'Session 4',
 			'1545@Main hall': `You can have sessions at the same time, too!`,
 		})
@@ -40,17 +42,17 @@ describe('ongoingSessions()', () => {
 
 	it('should not highlight the last session on the next day', () => {
 		const now = new Date('2022-03-12T08:00:00+01:00')
-		expect(ongoingSessions(makeSchedule(now), now)).toEqual({})
+		assert.deepEqual(ongoingSessions(makeSchedule(now), now), {})
 	})
 
 	it('should not mark the first session before begin', () => {
 		const now = new Date('2022-03-11T08:59:59.999+01:00')
-		expect(ongoingSessions(makeSchedule(now), now)).toEqual({})
+		assert.deepEqual(ongoingSessions(makeSchedule(now), now), {})
 	})
 
 	it('should mark sessions exactly when they start', () => {
 		const now = new Date('2022-03-11T09:00:00+01:00')
-		expect(ongoingSessions(makeSchedule(now), now)).toEqual({
+		assert.deepEqual(ongoingSessions(makeSchedule(now), now), {
 			900: 'Arrival & Breakfast',
 		})
 	})

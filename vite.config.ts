@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import Handlebars from 'handlebars'
 import path from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 
 const {
 	version,
@@ -52,11 +52,15 @@ export default defineConfig({
 		host: 'localhost',
 		port: 8080,
 	},
-	resolve: {
-		alias: [{ find: 'app/', replacement: '/src/' }],
-	},
 	build: {
 		outDir: './build',
 	},
 	envPrefix: 'PUBLIC_',
+	test: {
+		// node:test runs the pure-logic *.spec.ts files; Vitest handles the
+		// React component *.spec.tsx files that need JSX and a DOM.
+		environment: 'jsdom',
+		include: ['src/**/*.spec.tsx'],
+		setupFiles: ['./src/vitest.setup.ts'],
+	},
 })

@@ -1,4 +1,4 @@
-import styles from 'app/FeatherIcons.module.css'
+import styles from './FeatherIcons.module.css'
 import {
 	FeatherIcon as FeatherIconType,
 	icons as featherIcons,

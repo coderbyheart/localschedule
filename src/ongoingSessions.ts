@@ -1,4 +1,4 @@
-import { toUTCTime } from 'app/toUTCTime'
+import { toUTCTime } from './toUTCTime.ts'
 
 export type ConfDate = Pick<Schedule, 'day' | 'tz'>
 export type ConfDateWithSessions = Pick<Schedule, 'sessions'> & ConfDate

@@ -1,12 +1,12 @@
-import { ongoingSessions } from 'app/ongoingSessions'
-import { SessionName } from 'app/SessionName'
-import tableStyles from 'app/Table.module.css'
+import { ongoingSessions } from './ongoingSessions.ts'
+import { SessionName } from './SessionName.tsx'
+import tableStyles from './Table.module.css'
 import {
 	formatEventTime,
 	formatUserTime,
 	toEventTime,
 	toUserTime,
-} from 'app/time'
+} from './time.ts'
 import { differenceInCalendarDays, formatDistance } from 'date-fns'
 import { useEffect, useState } from 'react'
 

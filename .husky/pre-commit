@@ -1,4 +1,1 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npx lint-staged && npx tsc && npm test
+npx lint-staged && npx tsgo && npm test

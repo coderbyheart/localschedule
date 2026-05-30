@@ -1,4 +1,4 @@
-import styles from 'app/DaySelector.module.css'
+import styles from './DaySelector.module.css'
 import { format } from 'date-fns'
 import { useState } from 'react'
 export const DaySelector = ({

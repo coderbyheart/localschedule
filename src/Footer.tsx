@@ -1,12 +1,14 @@
-import { GithubIcon } from 'app/FeatherIcons'
-import styles from 'app/Footer.module.css'
+import { GithubIcon } from './FeatherIcons.tsx'
+import styles from './Footer.module.css'
+
+const homepage = import.meta.env.PUBLIC_HOMEPAGE
 
 export const Footer = () => (
 	<footer className={styles.Footer}>
 		<section className={styles.Copyright}>
 			<nav className={styles.Nav}>
 				<a
-					href={import.meta.env.PUBLIC_HOMEPAGE}
+					href={homepage}
 					rel="noopener noreferrer"
 					target="_blank"
 					title={'Contribute to this project on GitHub'}
