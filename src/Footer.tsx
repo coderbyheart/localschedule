@@ -17,7 +17,7 @@ export const Footer = () => (
 				</a>
 			</nav>
 			<p>
-				&copy; 2020&mdash;2022{' '}
+				&copy; 2020&mdash;2026{' '}
 				<a
 					href="https://coderbyheart.com"
 					rel="noopener noreferrer"
