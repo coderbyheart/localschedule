@@ -1,107 +1,33 @@
-import { formatSessionName } from './SessionName.tsx'
-import { toUTCTime } from './toUTCTime.ts'
-import { createEvents } from 'ics'
+import { scheduleEvents } from './scheduleEvents.ts'
+import { createEvents, type EventAttributes } from 'ics'
 
 export const useIcalExport = (schedule: Schedule) => {
 	return (): void => {
-		const utcTime = toUTCTime({
-			conferenceDate: schedule.day,
-			eventTimezoneName: schedule.tz,
-		})
 		const { error, value } = createEvents(
-			Object.entries(schedule.sessions)
-				.sort(
-					([timeWithTrackA], [timeWithTrackB]) =>
-						parseInt(timeWithTrackA.split('@')[0]) -
-						parseInt(timeWithTrackB.split('@')[0]),
-				)
-				.map(([timeWithTrack, name], i, sessions) => {
-					const { sessionName, url } = formatSessionName(name)
-					const urlText = url === undefined ? undefined : url.toString()
-
-					const [time, track] = timeWithTrack.split('@')
-					const startTime = utcTime(parseInt(time, 10))
-
-					// Find next entry for end time
-					let next: [string, string] | undefined = undefined
-					let nextStartTime: Date | undefined = undefined
-
-					if (track === undefined) {
-						// This session has no track. Find next entry in all tracks. This entry is probably a Lunch break that is valid for all tracks.
-						let j = i
-						while (
-							j < sessions.length - 1 &&
-							(nextStartTime?.getTime() ?? 0) <= startTime.getTime()
-						) {
-							next = sessions[++j]
-							const [nextStartTimeString] = next[0].split('@')
-							nextStartTime = utcTime(parseInt(nextStartTimeString, 10))
-						}
-					} else {
-						let nextTrack: string | undefined = undefined
-						// This session a track. Find next entry in the same track OR a without a track (e.g. a lunch break)
-						let j = i
-						while (
-							j < sessions.length - 1 &&
-							(nextStartTime?.getTime() ?? 0) <= startTime.getTime() &&
-							(nextTrack !== track || nextTrack === undefined)
-						) {
-							next = sessions[++j]
-							const [nextStartTimeString, nextTrackString] = next[0].split('@')
-							nextTrack = nextTrackString
-							nextStartTime = utcTime(parseInt(nextStartTimeString, 10))
-						}
-					}
-
-					const description = [
-						schedule.name,
-						`Session: ${sessionName}`,
-						urlText,
-					].join('\n')
-
-					if (next !== undefined) {
-						const [endTimeString] = next[0].split('@')
-						const endTime = utcTime(parseInt(endTimeString, 10))
-						return {
-							title: `${schedule.name}: ${sessionName}`,
-							start: [
-								startTime.getUTCFullYear(),
-								startTime.getUTCMonth() + 1,
-								startTime.getUTCDate(),
-								startTime.getUTCHours(),
-								startTime.getUTCMinutes(),
-							],
-							startInputType: 'utc',
-							end: [
-								endTime.getUTCFullYear(),
-								endTime.getUTCMonth() + 1,
-								endTime.getUTCDate(),
-								endTime.getUTCHours(),
-								endTime.getUTCMinutes(),
-							],
-							endInputType: 'utc',
-							url: urlText,
-							description,
-							location: track,
-						}
-					} else {
-						return {
-							title: `${schedule.name}: ${sessionName}`,
-							start: [
-								startTime.getUTCFullYear(),
-								startTime.getUTCMonth() + 1,
-								startTime.getUTCDate(),
-								startTime.getUTCHours(),
-								startTime.getUTCMinutes(),
-							],
-							startInputType: 'utc',
-							duration: { minutes: 60 },
-							url: urlText,
-							description,
-							location: track,
-						}
-					}
+			scheduleEvents(schedule).map(
+				({ title, start, end, url, description, location }): EventAttributes => ({
+					title,
+					start: [
+						start.getUTCFullYear(),
+						start.getUTCMonth() + 1,
+						start.getUTCDate(),
+						start.getUTCHours(),
+						start.getUTCMinutes(),
+					],
+					startInputType: 'utc',
+					end: [
+						end.getUTCFullYear(),
+						end.getUTCMonth() + 1,
+						end.getUTCDate(),
+						end.getUTCHours(),
+						end.getUTCMinutes(),
+					],
+					endInputType: 'utc',
+					url,
+					description,
+					location,
 				}),
+			),
 		)
 
 		if (value !== undefined && value !== null) {

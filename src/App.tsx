@@ -6,12 +6,14 @@ import {
 	EyeIcon,
 	EyeOffIcon,
 	GithubIcon,
+	GoogleCalendarIcon,
 	LockIcon,
 	StarIcon,
 	UnLockIcon,
 } from './FeatherIcons.tsx'
 import { Footer } from './Footer.tsx'
 import formStyles from './Form.module.css'
+import { googleCalendarScheduleUrl } from './googleCalendar.ts'
 import { Schedule as ScheduleComponent } from './Schedule.tsx'
 import { Theme, ThemeSwitcher } from './ThemeSwitcher.tsx'
 import { TimeZoneSelector } from './timezones.tsx'
@@ -83,6 +85,7 @@ export const App = () => {
 	)
 
 	const downloadIcal = useIcalExport(cfg)
+	const addToGoogleCalendar = googleCalendarScheduleUrl(cfg)
 
 	useEffect(() => {
 		document.documentElement.setAttribute('data-theme', theme)
@@ -193,6 +196,17 @@ export const App = () => {
 								>
 									<CalendarIcon />
 								</button>
+								{addToGoogleCalendar !== undefined && (
+									<a
+										className={formStyles.Button}
+										href={addToGoogleCalendar}
+										rel="noopener noreferrer"
+										target="_blank"
+										title="Add to Google Calendar"
+									>
+										<GoogleCalendarIcon />
+									</a>
+								)}
 								<button
 									className={formStyles.Button}
 									title="Hide past sessions"
