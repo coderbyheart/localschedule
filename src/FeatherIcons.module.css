@@ -8,6 +8,7 @@
   position: relative;
   display: inline-block;
 }
+
 .googleCalendarLetter {
   position: absolute;
   left: 0;
@@ -20,4 +21,8 @@
   font-weight: 700;
   line-height: 1;
   pointer-events: none;
+}
+
+.googleCalendar svg {
+  margin-top: 4px
 }
