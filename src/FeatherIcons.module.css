@@ -2,3 +2,22 @@
   line-height: 1px;
   display: inline-block;
 }
+
+/* Overlays a "G" onto the calendar icon to mark the "Add to Google Calendar" action */
+.googleCalendar {
+  position: relative;
+  display: inline-block;
+}
+.googleCalendarLetter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* center within the calendar body, below the header line */
+  top: 62%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}

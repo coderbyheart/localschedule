@@ -370,6 +370,15 @@ export const CalendarIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} type="calendar" title="Export as calendar (.ics)" />
 )
 
+export const GoogleCalendarIcon = (options?: TypedIconOptions) => (
+	<span className={styles.googleCalendar}>
+		<FeatherIcon {...options} type="calendar" title="Add to Google Calendar" />
+		<span className={styles.googleCalendarLetter} aria-hidden="true">
+			G
+		</span>
+	</span>
+)
+
 export const StarIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} type="star" title="⭐" />
 )
