@@ -72,7 +72,7 @@
     "lint-staged": "17.0.7",
     "sinon": "22.0.0",
     "vite": "8.0.16",
-    "vitest": "4.1.8"
+    "vitest": "4.1.9"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
