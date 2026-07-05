@@ -55,7 +55,7 @@
     "@types/sinon": "22.0.0",
     "@typescript-eslint/eslint-plugin": "8.62.1",
     "@typescript-eslint/parser": "8.62.1",
-    "@typescript/native-preview": "7.0.0-dev.20260704.1",
+    "@typescript/native-preview": "7.0.0-dev.20260705.1",
     "@vitejs/plugin-react": "6.0.3",
     "check-node-version": "4.2.1",
     "commitlint": "21.2.0",
