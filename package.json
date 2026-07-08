@@ -87,7 +87,7 @@
   },
   "engines": {
     "node": ">=26 <27",
-    "npm": ">=11 <12"
+    "npm": ">=11 <13"
   },
   "release": {
     "branches": [
