@@ -29,7 +29,7 @@
     "Conferences"
   ],
   "dependencies": {
-    "@bifravst/from-env": "3.0.2",
+    "@bifravst/from-env": "4.0.0",
     "@sentry/browser": "10.71.0",
     "@sentry/react": "10.71.0",
     "ajv": "8.20.0",
