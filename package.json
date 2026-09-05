@@ -55,7 +55,7 @@
     "@types/sinon": "22.0.0",
     "@typescript-eslint/eslint-plugin": "8.69.0",
     "@typescript-eslint/parser": "8.69.0",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "@typescript/native": "npm:typescript@7.0.2",
     "@vitejs/plugin-react": "6.1.1",
     "check-node-version": "4.2.1",
     "commitlint": "21.2.2",
@@ -71,6 +71,7 @@
     "jsdom": "30.0.1",
     "lint-staged": "17.5.0",
     "sinon": "22.1.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
     "vite": "8.2.2",
     "vitest": "5.0.0"
   },

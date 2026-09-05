@@ -37,3 +37,9 @@ You can see the browser by running
 ## Architecture decision records (ADRs)
 
 see [./adr](./adr).
+
+## TypeScript 6 and 7
+
+This repo
+[runs TypeScript 6 and 7 side by side](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0),
+[so that eslint works](https://github.com/typescript-eslint/typescript-eslint/issues/10940#issuecomment-4922812181).

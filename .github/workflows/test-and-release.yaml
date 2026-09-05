@@ -28,7 +28,7 @@ jobs:
         run: npm ci --no-audit
 
       - name: Compile TypeScript
-        run: npx tsgo
+        run: npx tsc
 
       - name: Lint
         run: npm run lint
