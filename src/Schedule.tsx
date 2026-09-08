@@ -72,7 +72,8 @@ const Countdown = ({
 	)
 }
 
-const formatTimezone = (tz: string) => tz.split('/')[1].replace('_', ' ')
+const formatTimezone = (tz: string) =>
+	(tz.split('/').pop() ?? tz).replace(/_/g, ' ')
 
 export const Schedule = ({
 	conferenceDate,

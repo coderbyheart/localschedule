@@ -1,7 +1,7 @@
 import styles from './TimeZoneSelector.module.css'
 import type { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 
-export const timezones = [
+const fallbackTimezones = [
 	'Africa/Abidjan',
 	'Africa/Accra',
 	'Africa/Algiers',
@@ -352,6 +352,39 @@ export const timezones = [
 	'Pacific/Wallis',
 ]
 
+type IntlWithSupportedValuesOf = {
+	supportedValuesOf?: (key: 'timeZone') => string[]
+}
+
+const supportedTimezones = (): string[] | undefined => {
+	try {
+		const { supportedValuesOf } =
+			Intl as typeof Intl & IntlWithSupportedValuesOf
+		if (typeof supportedValuesOf !== 'function') return undefined
+		const zones = supportedValuesOf.call(Intl, 'timeZone')
+		if (!Array.isArray(zones)) return undefined
+		const names = zones.filter(
+			(zone): zone is string => typeof zone === 'string',
+		)
+		return names.length > 0 ? names : undefined
+	} catch {
+		return undefined
+	}
+}
+
+// Include all timezones by name: use the platform's canonical IANA list when
+// available, so the selector never lags behind tzdata. The hardcoded list is
+// only a fallback for runtimes without `Intl.supportedValuesOf('timeZone')`.
+export const timezones: string[] =
+	supportedTimezones() ?? fallbackTimezones
+
+const cityName = (tz: string): string =>
+	(tz.split('/').pop() ?? tz).replace(/_/g, ' ')
+
+const sortedTimezones = [...timezones].sort(
+	(a, b) => cityName(a).localeCompare(cityName(b)) || a.localeCompare(b),
+)
+
 export const TimeZoneSelector = (
 	props: Omit<
 		DetailedHTMLProps<
@@ -362,19 +395,10 @@ export const TimeZoneSelector = (
 	>,
 ) => (
 	<select {...props} className={styles.TimeZoneSelector}>
-		{timezones
-			.sort((a, b) => {
-				const [, a2, a3] = a.split('/')
-				const [, b2, b3] = b.split('/')
-				return (a3 ?? a2).localeCompare(b3 ?? b2)
-			})
-			.map((tz) => {
-				const [t1, t2, t3] = tz.split('/')
-				return (
-					<option key={tz} value={tz}>
-						{t3 ?? t2} ({t3 === undefined ? t1 : `${t1}/${t2}`})
-					</option>
-				)
-			})}
+		{sortedTimezones.map((tz) => (
+			<option key={tz} value={tz}>
+				{cityName(tz)} ({tz})
+			</option>
+		))}
 	</select>
 )
