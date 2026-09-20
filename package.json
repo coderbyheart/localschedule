@@ -43,7 +43,7 @@
   "devDependencies": {
     "@bifravst/eslint-config-typescript": "8.0.5",
     "@bifravst/object-to-env": "8.0.0",
-    "@bifravst/prettier-config": "2.0.0",
+    "@bifravst/prettier-config": "2.0.1",
     "@commitlint/config-conventional": "21.2.3",
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.63.0",
