@@ -46,7 +46,7 @@
     "@bifravst/prettier-config": "2.0.5",
     "@commitlint/config-conventional": "21.2.4",
     "@eslint/js": "10.0.1",
-    "@playwright/test": "1.65.0",
+    "@playwright/test": "1.65.1",
     "@testing-library/react": "16.3.3",
     "@types/feather-icons": "4.29.4",
     "@types/node": "26.6.6",
