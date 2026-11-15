@@ -30,8 +30,11 @@ jobs:
       - name: Compile TypeScript
         run: npx tsc
 
-      - name: Lint
-        run: npm run lint
+      - name: Check source code with oxlint
+        run: npx oxlint ./
+
+      - name: Check if source code is properly formatted
+        run: npx oxfmt --check
 
       - name: Run unit tests
         run: npm test

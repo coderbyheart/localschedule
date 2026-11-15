@@ -2,6 +2,21 @@
   "name": "@coderbyheart/localschedule",
   "version": "0.0.0-development",
   "description": "Create a shareable schedule with times in your local timezone. Great for remote conferences!",
+  "keywords": [
+    "Conferences",
+    "Schedule",
+    "Timezones"
+  ],
+  "homepage": "https://github.com/coderbyheart/localschedule#readme",
+  "bugs": {
+    "url": "https://github.com/coderbyheart/localschedule/issues"
+  },
+  "license": "MIT",
+  "author": "Markus Tacker | https://coderbyheart.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderbyheart/localschedule.git"
+  },
   "type": "module",
   "scripts": {
     "start": "vite",
@@ -11,23 +26,8 @@
     "test": "node --test 'src/**/*.spec.ts' && vitest run",
     "test:e2e": "npx playwright test",
     "postinstall": "check-node-version --package",
-    "lint": "eslint src"
+    "lint": "oxlint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coderbyheart/localschedule.git"
-  },
-  "author": "Markus Tacker | https://coderbyheart.com/",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/coderbyheart/localschedule/issues"
-  },
-  "homepage": "https://github.com/coderbyheart/localschedule#readme",
-  "keywords": [
-    "Schedule",
-    "Timezones",
-    "Conferences"
-  ],
   "dependencies": {
     "@bifravst/from-env": "4.0.1",
     "@sentry/browser": "11.12.0",
@@ -41,11 +41,9 @@
     "react-router-dom": "7.18.5"
   },
   "devDependencies": {
-    "@bifravst/eslint-config-typescript": "9.0.1",
     "@bifravst/object-to-env": "8.0.1",
-    "@bifravst/prettier-config": "2.0.7",
+    "@coderbyheart/oxlint-config": "1.0.1",
     "@commitlint/config-conventional": "21.2.4",
-    "@eslint/js": "10.0.1",
     "@playwright/test": "1.65.1",
     "@testing-library/react": "16.3.3",
     "@types/feather-icons": "4.29.4",
@@ -53,42 +51,30 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/sinon": "22.0.2",
-    "@typescript-eslint/eslint-plugin": "8.72.2",
-    "@typescript-eslint/parser": "8.72.2",
     "@typescript/native": "npm:typescript@7.0.2",
     "@vitejs/plugin-react": "6.3.0",
     "check-node-version": "4.2.1",
     "commitlint": "21.2.4",
-    "eslint": "10.15.0",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-no-restricted-imports": "0.0.0",
-    "eslint-plugin-prefer-arrow": "1.2.3",
-    "eslint-plugin-unicorn": "79.0.0",
-    "globals": "17.14.0",
     "handlebars": "4.7.10",
     "husky": "9.1.7",
     "identity-obj-proxy": "3.0.0",
     "jsdom": "31.0.1",
     "lint-staged": "17.6.0",
+    "oxfmt": "0.78.0",
+    "oxlint": "1.93.0",
     "sinon": "22.1.0",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vite": "8.3.8",
     "vitest": "5.1.0"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "eslint"
-    ],
-    "e2e-tests/**/*.{ts,tsx}": [
-      "eslint"
+    "*.{ts,tsx}": [
+      "oxfmt --write",
+      "oxlint --fix"
     ],
     "*.{md,json,yaml,yml,html}": [
-      "prettier --write"
+      "oxfmt --write"
     ]
-  },
-  "engines": {
-    "node": ">=26 <27",
-    "npm": ">=11 <13"
   },
   "release": {
     "branches": [
@@ -101,5 +87,8 @@
       "@semantic-release/github"
     ]
   },
-  "prettier": "@bifravst/prettier-config"
+  "engines": {
+    "node": ">=26 <27",
+    "npm": ">=11 <13"
+  }
 }

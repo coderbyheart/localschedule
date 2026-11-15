@@ -1,46 +1,28 @@
-import { fromZonedTime, format } from 'date-fns-tz'
+import { fromZonedTime, format } from "date-fns-tz"
 
 export const toUserTime =
-	({
-		conferenceDate,
-		eventTimezoneName,
-	}: {
-		conferenceDate: string
-		eventTimezoneName: string
-	}) =>
-	(time: number): Date => {
-		const minutes = time % 100
-		const hours = (time - minutes) / 100
-		return fromZonedTime(
-			`${conferenceDate} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
-				2,
-				'0',
-			)}:00.000`,
-			eventTimezoneName,
-		)
-	}
+  ({ conferenceDate, eventTimezoneName }: { conferenceDate: string; eventTimezoneName: string }) =>
+  (time: number): Date => {
+    const minutes = time % 100
+    const hours = (time - minutes) / 100
+    return fromZonedTime(
+      `${conferenceDate} ${`${hours}`.padStart(2, "0")}:${`${minutes}`.padStart(2, "0")}:00.000`,
+      eventTimezoneName,
+    )
+  }
 export const formatUserTime =
-	({ userTimeZone }: { userTimeZone: string }) =>
-	(date: Date): string =>
-		format(date, 'HH:mm', { timeZone: userTimeZone })
+  ({ userTimeZone }: { userTimeZone: string }) =>
+  (date: Date): string =>
+    format(date, "HH:mm", { timeZone: userTimeZone })
 
 export const toEventTime =
-	({
-		conferenceDate,
-		userTimeZone,
-	}: {
-		conferenceDate: string
-		userTimeZone: string
-	}) =>
-	(time: number): Date => {
-		const minutes = time % 100
-		const hours = (time - minutes) / 100
-		return fromZonedTime(
-			`${conferenceDate} ${`${hours}`.padStart(2, '0')}:${`${minutes}`.padStart(
-				2,
-				'0',
-			)}:00.000`,
-			userTimeZone,
-		)
-	}
-export const formatEventTime = (date: Date): string => format(date, 'HH:mm')
+  ({ conferenceDate, userTimeZone }: { conferenceDate: string; userTimeZone: string }) =>
+  (time: number): Date => {
+    const minutes = time % 100
+    const hours = (time - minutes) / 100
+    return fromZonedTime(
+      `${conferenceDate} ${`${hours}`.padStart(2, "0")}:${`${minutes}`.padStart(2, "0")}:00.000`,
+      userTimeZone,
+    )
+  }
+export const formatEventTime = (date: Date): string => format(date, "HH:mm")

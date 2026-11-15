@@ -1,293 +1,277 @@
-import styles from './App.module.css'
-import { DaySelector } from './DaySelector.tsx'
-import { Editor } from './Editor.tsx'
+import styles from "./App.module.css"
+import { DaySelector } from "./DaySelector.tsx"
+import { Editor } from "./Editor.tsx"
 import {
-	CalendarIcon,
-	EyeIcon,
-	EyeOffIcon,
-	GithubIcon,
-	GoogleCalendarIcon,
-	LockIcon,
-	StarIcon,
-	UnLockIcon,
-} from './FeatherIcons.tsx'
-import { Footer } from './Footer.tsx'
-import formStyles from './Form.module.css'
-import { googleCalendarScheduleUrl } from './googleCalendar.ts'
-import { Schedule as ScheduleComponent } from './Schedule.tsx'
-import { Theme, ThemeSwitcher } from './ThemeSwitcher.tsx'
-import { TimeZoneSelector } from './timezones.tsx'
-import { useIcalExport } from './useIcalExport.ts'
-import { format } from 'date-fns'
-import { useEffect, useState } from 'react'
+  CalendarIcon,
+  EyeIcon,
+  EyeOffIcon,
+  GithubIcon,
+  GoogleCalendarIcon,
+  LockIcon,
+  StarIcon,
+  UnLockIcon,
+} from "./FeatherIcons.tsx"
+import { Footer } from "./Footer.tsx"
+import formStyles from "./Form.module.css"
+import { googleCalendarScheduleUrl } from "./googleCalendar.ts"
+import { Schedule as ScheduleComponent } from "./Schedule.tsx"
+import { Theme, ThemeSwitcher } from "./ThemeSwitcher.tsx"
+import { TimeZoneSelector } from "./timezones.tsx"
+import { useIcalExport } from "./useIcalExport.ts"
+import { format } from "date-fns"
+import { useEffect, useState } from "react"
 
 const homepage = import.meta.env.PUBLIC_HOMEPAGE
 
 let defaultTheme = Theme.light
-if (typeof window.matchMedia === 'function') {
-	const match = window.matchMedia('(prefers-color-scheme: dark)')
-	defaultTheme = match.matches ? Theme.dark : Theme.light
+if (typeof window.matchMedia === "function") {
+  const match = window.matchMedia("(prefers-color-scheme: dark)")
+  defaultTheme = match.matches ? Theme.dark : Theme.light
 }
 
 export const App = () => {
-	let cfg: Schedule = {
-		name: 'ExampleConf',
-		day: format(new Date(), 'yyyy-MM-dd'),
-		tz: 'Europe/Oslo',
-		sessions: {
-			900: 'Arrival & Breakfast',
-			930: 'Opening & Marketplace',
-			1030: 'Session 1',
-			1130: 'Coffee Break',
-			1145: 'Session 2',
-			1245: 'Lunch Break',
-			1430: 'Session 3',
-			1530: 'Coffee Break',
-			1545: 'Session 4',
-			'1545@Main hall': `You can have sessions at the same time, too!`,
-			1645: 'Coffee Break',
-			1700: 'Closing & Retro',
-			1730: 'Dinner Break',
-			1900: 'Evening Activities',
-			1946: `You can add links, too!|${homepage}`,
-		},
-		hidePastSessions: false,
-	}
-	const hash =
-		new URLSearchParams(window.location.search).get('schedule') ??
-		new URL(window.location.href).hash?.slice(1) ??
-		false
+  let cfg: Schedule = {
+    name: "ExampleConf",
+    day: format(new Date(), "yyyy-MM-dd"),
+    tz: "Europe/Oslo",
+    sessions: {
+      900: "Arrival & Breakfast",
+      930: "Opening & Marketplace",
+      1030: "Session 1",
+      1130: "Coffee Break",
+      1145: "Session 2",
+      1245: "Lunch Break",
+      1430: "Session 3",
+      1530: "Coffee Break",
+      1545: "Session 4",
+      "1545@Main hall": `You can have sessions at the same time, too!`,
+      1645: "Coffee Break",
+      1700: "Closing & Retro",
+      1730: "Dinner Break",
+      1900: "Evening Activities",
+      1946: `You can add links, too!|${homepage}`,
+    },
+    hidePastSessions: false,
+  }
+  const hash =
+    new URLSearchParams(window.location.search).get("schedule") ??
+    new URL(window.location.href).hash?.slice(1) ??
+    false
 
-	const hidePastSessionsDefault =
-		new URLSearchParams(window.location.search).get('hidePastSessions') !== null
+  const hidePastSessionsDefault =
+    new URLSearchParams(window.location.search).get("hidePastSessions") !== null
 
-	if (hash) {
-		const payload = decodeURIComponent(hash)
-		cfg = {
-			...cfg,
-			...JSON.parse(
-				payload.startsWith('v2:') ? payload.slice(3) : atob(payload),
-			),
-		}
-	}
-	const [theme, updateTheme] = useState<Theme>(
-		(window.localStorage.getItem('theme') ?? defaultTheme) === 'dark'
-			? Theme.dark
-			: Theme.light,
-	)
-	const [updatedName, updateName] = useState(cfg.name)
-	const [updatedDay, updateDay] = useState(cfg.day)
-	const [updatedTimeZone, updateTimeZone] = useState(cfg.tz)
-	const [updatedSessions, updateSessions] = useState(cfg.sessions)
-	const [editing, setEditing] = useState(false)
-	const [hidePastSessions, setHidePastSessions] = useState(
-		hidePastSessionsDefault,
-	)
+  if (hash) {
+    const payload = decodeURIComponent(hash)
+    cfg = {
+      ...cfg,
+      ...JSON.parse(payload.startsWith("v2:") ? payload.slice(3) : atob(payload)),
+    }
+  }
+  const [theme, updateTheme] = useState<Theme>(
+    (window.localStorage.getItem("theme") ?? defaultTheme) === "dark" ? Theme.dark : Theme.light,
+  )
+  const [updatedName, updateName] = useState(cfg.name)
+  const [updatedDay, updateDay] = useState(cfg.day)
+  const [updatedTimeZone, updateTimeZone] = useState(cfg.tz)
+  const [updatedSessions, updateSessions] = useState(cfg.sessions)
+  const [editing, setEditing] = useState(false)
+  const [hidePastSessions, setHidePastSessions] = useState(hidePastSessionsDefault)
 
-	const downloadIcal = useIcalExport(cfg)
-	const addToGoogleCalendar = googleCalendarScheduleUrl(cfg)
+  const downloadIcal = useIcalExport(cfg)
+  const addToGoogleCalendar = googleCalendarScheduleUrl(cfg)
 
-	useEffect(() => {
-		document.documentElement.setAttribute('data-theme', theme)
-	}, [theme])
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme)
+  }, [theme])
 
-	return (
-		<>
-			<main>
-				{editing && (
-					<>
-						<div className={styles.Title}>
-							<button
-								className={formStyles.Button}
-								title="Save changes"
-								name="save-schedule"
-								onClick={() => {
-									const cfg = {
-										name: updatedName,
-										day: updatedDay,
-										tz: updatedTimeZone,
-										sessions: updatedSessions,
-									}
-									window.location.assign(
-										`${
-											new URL(document.location.href).origin
-										}#${encodeURIComponent(`v2:${JSON.stringify(cfg)}`)}`,
-									)
-									setEditing(false)
-								}}
-							>
-								<UnLockIcon />
-							</button>
-							<div className={formStyles.DateEditor}>
-								<input
-									className={formStyles.Input}
-									type="text"
-									value={updatedName}
-									onChange={({ target: { value } }) => updateName(value)}
-									name="conference-name"
-								/>
-								<DaySelector day={updatedDay} onUpdate={updateDay} />
-								<TimeZoneSelector
-									value={updatedTimeZone}
-									onChange={({ target: { value } }) => updateTimeZone(value)}
-									name="conference-timezone"
-								/>
-							</div>
-							<ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
-						</div>
-						<Editor
-							onAdd={(add) => {
-								updateSessions((sessions) => {
-									let time = parseInt(`${add.hour}${add.minute}`, 10).toString()
-									if (add.track.length > 0) time = `${time}@${add.track}`
-									return {
-										...sessions,
-										[time]: `${add.name}${
-											add.url === '' ? '' : `|${add.url.toString()}`
-										}`,
-									}
-								})
-							}}
-							onDelete={(time) => {
-								updateSessions((sessions) => {
-									const s = { ...sessions }
-									delete s[time]
-									return s
-								})
-							}}
-							conferenceDate={updatedDay}
-							eventTimezoneName={updatedTimeZone}
-							sessions={updatedSessions}
-						/>
-					</>
-				)}
-				{!editing && (
-					<>
-						<div className={styles.Title}>
-							<button
-								className={formStyles.Button}
-								title="Edit schedule"
-								onClick={() => {
-									setEditing(true)
-								}}
-								name="edit-schedule"
-							>
-								<LockIcon />
-							</button>
-							<h1 className={styles.Headline}>
-								{updatedName}: {updatedDay}
-							</h1>
-							<div className="actions">
-								<a
-									className={formStyles.Button}
-									href={homepage}
-									rel="noopener noreferrer"
-									target="_blank"
-									title={'Contribute to this project on GitHub'}
-								>
-									<GithubIcon />
-								</a>
-								<button
-									className={formStyles.Button}
-									title="Export as calendar (.ics)"
-									onClick={() => {
-										downloadIcal()
-									}}
-								>
-									<CalendarIcon />
-								</button>
-								{addToGoogleCalendar !== undefined && (
-									<a
-										className={formStyles.Button}
-										href={addToGoogleCalendar}
-										rel="noopener noreferrer"
-										target="_blank"
-										title="Add to Google Calendar"
-									>
-										<GoogleCalendarIcon />
-									</a>
-								)}
-								<button
-									className={formStyles.Button}
-									title="Hide past sessions"
-									onClick={() => setHidePastSessions((h) => !h)}
-								>
-									{hidePastSessions && <EyeOffIcon />}
-									{!hidePastSessions && <EyeIcon />}
-								</button>
-								<ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
-							</div>
-						</div>
-						<ScheduleComponent
-							sessions={cfg.sessions}
-							eventTimezoneName={cfg.tz}
-							conferenceDate={cfg.day}
-							hidePastSessions={hidePastSessions}
-						/>
-					</>
-				)}
-				<div className={styles.Info}>
-					<p>
-						Click the <LockIcon /> icon to create your own schedule. When done,
-						click the <UnLockIcon /> and share the updated URL.
-					</p>
-					<h2>Tips</h2>
-					<p>
-						Schedules change! Share the URL to your <em>localschedule</em> using{' '}
-						<a
-							href="https://short.io/"
-							rel="noreferrer noopener"
-							target="_blank"
-						>
-							short.io
-						</a>{' '}
-						which allows edits to the URL it redirects to.
-					</p>
-					<p>
-						<a
-							href="https://www.notion.so/"
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							Notion
-						</a>{' '}
-						user? Use{' '}
-						<a
-							href={`${
-								new URL(document.location.href).origin
-							}?schedule=${encodeURIComponent(`v2:${JSON.stringify(cfg)}`)}`}
-						>
-							this URL
-						</a>{' '}
-						to embed it on any page.
-					</p>
-					<h2>
-						Like <em>localschedule</em>?
-					</h2>
-					<p>
-						Please{' '}
-						<a
-							href={homepage}
-							rel="noopener noreferrer"
-							target="_blank"
-							title={'Contribute to this project on GitHub'}
-						>
-							<StarIcon />
-						</a>{' '}
-						it in on{' '}
-						<a
-							href={homepage}
-							rel="noopener noreferrer"
-							target="_blank"
-							title={'Contribute to this project on GitHub'}
-						>
-							GitHub
-						</a>
-						!
-					</p>
-				</div>
-			</main>
-			<Footer />
-		</>
-	)
+  return (
+    <>
+      <main>
+        {editing && (
+          <>
+            <div className={styles.Title}>
+              <button
+                className={formStyles.Button}
+                title="Save changes"
+                name="save-schedule"
+                onClick={() => {
+                  const cfg = {
+                    name: updatedName,
+                    day: updatedDay,
+                    tz: updatedTimeZone,
+                    sessions: updatedSessions,
+                  }
+                  window.location.assign(
+                    `${
+                      new URL(document.location.href).origin
+                    }#${encodeURIComponent(`v2:${JSON.stringify(cfg)}`)}`,
+                  )
+                  setEditing(false)
+                }}
+              >
+                <UnLockIcon />
+              </button>
+              <div className={formStyles.DateEditor}>
+                <input
+                  className={formStyles.Input}
+                  type="text"
+                  value={updatedName}
+                  onChange={({ target: { value } }) => updateName(value)}
+                  name="conference-name"
+                />
+                <DaySelector day={updatedDay} onUpdate={updateDay} />
+                <TimeZoneSelector
+                  value={updatedTimeZone}
+                  onChange={({ target: { value } }) => updateTimeZone(value)}
+                  name="conference-timezone"
+                />
+              </div>
+              <ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
+            </div>
+            <Editor
+              onAdd={(add) => {
+                updateSessions((sessions) => {
+                  let time = parseInt(`${add.hour}${add.minute}`, 10).toString()
+                  if (add.track.length > 0) time = `${time}@${add.track}`
+                  return {
+                    ...sessions,
+                    [time]: `${add.name}${add.url === "" ? "" : `|${add.url.toString()}`}`,
+                  }
+                })
+              }}
+              onDelete={(time) => {
+                updateSessions((sessions) => {
+                  const s = { ...sessions }
+                  delete s[time]
+                  return s
+                })
+              }}
+              conferenceDate={updatedDay}
+              eventTimezoneName={updatedTimeZone}
+              sessions={updatedSessions}
+            />
+          </>
+        )}
+        {!editing && (
+          <>
+            <div className={styles.Title}>
+              <button
+                className={formStyles.Button}
+                title="Edit schedule"
+                onClick={() => {
+                  setEditing(true)
+                }}
+                name="edit-schedule"
+              >
+                <LockIcon />
+              </button>
+              <h1 className={styles.Headline}>
+                {updatedName}: {updatedDay}
+              </h1>
+              <div className="actions">
+                <a
+                  className={formStyles.Button}
+                  href={homepage}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  title={"Contribute to this project on GitHub"}
+                >
+                  <GithubIcon />
+                </a>
+                <button
+                  className={formStyles.Button}
+                  title="Export as calendar (.ics)"
+                  onClick={() => {
+                    downloadIcal()
+                  }}
+                >
+                  <CalendarIcon />
+                </button>
+                {addToGoogleCalendar !== undefined && (
+                  <a
+                    className={formStyles.Button}
+                    href={addToGoogleCalendar}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="Add to Google Calendar"
+                  >
+                    <GoogleCalendarIcon />
+                  </a>
+                )}
+                <button
+                  className={formStyles.Button}
+                  title="Hide past sessions"
+                  onClick={() => setHidePastSessions((h) => !h)}
+                >
+                  {hidePastSessions && <EyeOffIcon />}
+                  {!hidePastSessions && <EyeIcon />}
+                </button>
+                <ThemeSwitcher currentTheme={theme} onSwitch={updateTheme} />
+              </div>
+            </div>
+            <ScheduleComponent
+              sessions={cfg.sessions}
+              eventTimezoneName={cfg.tz}
+              conferenceDate={cfg.day}
+              hidePastSessions={hidePastSessions}
+            />
+          </>
+        )}
+        <div className={styles.Info}>
+          <p>
+            Click the <LockIcon /> icon to create your own schedule. When done, click the{" "}
+            <UnLockIcon /> and share the updated URL.
+          </p>
+          <h2>Tips</h2>
+          <p>
+            Schedules change! Share the URL to your <em>localschedule</em> using{" "}
+            <a href="https://short.io/" rel="noreferrer noopener" target="_blank">
+              short.io
+            </a>{" "}
+            which allows edits to the URL it redirects to.
+          </p>
+          <p>
+            <a href="https://www.notion.so/" rel="noopener noreferrer" target="_blank">
+              Notion
+            </a>{" "}
+            user? Use{" "}
+            <a
+              href={`${
+                new URL(document.location.href).origin
+              }?schedule=${encodeURIComponent(`v2:${JSON.stringify(cfg)}`)}`}
+            >
+              this URL
+            </a>{" "}
+            to embed it on any page.
+          </p>
+          <h2>
+            Like <em>localschedule</em>?
+          </h2>
+          <p>
+            Please{" "}
+            <a
+              href={homepage}
+              rel="noopener noreferrer"
+              target="_blank"
+              title={"Contribute to this project on GitHub"}
+            >
+              <StarIcon />
+            </a>{" "}
+            it in on{" "}
+            <a
+              href={homepage}
+              rel="noopener noreferrer"
+              target="_blank"
+              title={"Contribute to this project on GitHub"}
+            >
+              GitHub
+            </a>
+            !
+          </p>
+        </div>
+      </main>
+      <Footer />
+    </>
+  )
 }
