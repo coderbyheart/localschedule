@@ -1,9 +1,9 @@
 [build]
-    publish = "build"
-    command = '''
+publish = "build"
+command = '''
     export PUBLIC_VERSION=$COMMIT_REF
     npm run build;
     '''
 [build.environment]
-    NODE_VERSION = "26"
-    NPM_VERSION = "11"
+NODE_VERSION = "26"
+NPM_VERSION = "11"
