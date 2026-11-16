@@ -1,44 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "helpers:pinGitHubActionDigestsToSemver"],
-  "ignorePresets": [":prHourlyLimit2", ":prConcurrentLimit20"],
-  "labels": ["dependencies"],
+  "extends": ["github>coderbyheart/renovate-config"],
   "packageRules": [
-    {
-      "rangeStrategy": "bump",
-      "matchDepTypes": [
-        "dependencies",
-        "devDependencies",
-        "optionalDependencies",
-        "peerDependencies"
-      ]
-    },
-    {
-      "matchUpdateTypes": ["minor", "pin", "digest"],
-      "automerge": true,
-      "matchDepTypes": [
-        "dependencies",
-        "devDependencies",
-        "optionalDependencies",
-        "peerDependencies"
-      ]
-    },
-    {
-      "matchUpdateTypes": ["patch", "lockFileMaintenance"],
-      "automerge": true,
-      "automergeType": "branch",
-      "matchDepTypes": [
-        "dependencies",
-        "devDependencies",
-        "optionalDependencies",
-        "peerDependencies"
-      ]
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    },
     {
       "groupName": "react",
       "matchPackageNames": ["react", "react-dom"]
