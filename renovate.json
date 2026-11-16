@@ -1,10 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>coderbyheart/renovate-config"],
-  "packageRules": [
-    {
-      "groupName": "react",
-      "matchPackageNames": ["react", "react-dom"]
-    }
-  ]
+  "extends": ["github>coderbyheart/renovate-config"]
 }
