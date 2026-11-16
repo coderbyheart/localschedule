@@ -60,7 +60,7 @@
     "identity-obj-proxy": "3.0.0",
     "jsdom": "31.0.1",
     "lint-staged": "17.6.1",
-    "oxfmt": "0.78.0",
+    "oxfmt": "0.79.0",
     "oxlint": "1.93.0",
     "sinon": "22.1.0",
     "typescript": "npm:@typescript/typescript6@6.0.2",
